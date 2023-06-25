@@ -14119,7 +14119,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8604693750619759250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c25271813931d814680ab7c84ef90710, type: 3}
   m_Name: 
@@ -14452,7 +14452,6 @@ MonoBehaviour:
   isRearPartPaintedBefore: 0
   isLeftPartPaintedBefore: 0
   isRightPartPaintedBefore: 0
-  carMaterial: {fileID: 2100000, guid: 30a882aa8c9de6b488e5c7b83b092a66, type: 2}
   bodyPartRenderer:
   - {fileID: 5177510235479630247}
   bodyPartMaterialIndex: 01000000

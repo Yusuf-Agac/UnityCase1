@@ -36,7 +36,7 @@ public class RandomCarGenerator : MonoBehaviour
             SetPartDamage(carAttributes, partName);
             carAttributes.SetPartPaintedBefore(partName, true);
         }
-        else if ((int)Random.Range(0, 1 - (1 / possibility)) == 0)
+        else if ((int)Random.Range(0, 1 - (2 / possibility)) == 0)
         {
             carAttributes.SetPartPaintedBefore(partName, true);
         }
