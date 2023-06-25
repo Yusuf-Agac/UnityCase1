@@ -6,31 +6,33 @@ using UnityEngine.Serialization;
 
 public class CarAttributes : MonoBehaviour
 {
+    [Space(20)]
     public int basePrice;
+    [Space(20)]
     [ReadOnly] public float bodyDamagePercentage;
     [ReadOnly] public float frontDamagePercentage;
     [ReadOnly] public float rearDamagePercentage;
     [ReadOnly] public float leftDamagePercentage;
     [ReadOnly] public float rightDamagePercentage;
-    
+    [Space(20)]
     [ReadOnly] public bool isBodyPaintedBefore;
     [ReadOnly] public bool isFrontPartPaintedBefore;
     [ReadOnly] public bool isRearPartPaintedBefore;
     [ReadOnly] public bool isLeftPartPaintedBefore;
     [ReadOnly] public bool isRightPartPaintedBefore;
-
+    [Space(20)]
     public List<Renderer> bodyPartRenderer;
     public List<int> bodyPartMaterialIndex;
-
+    [Space(40)]
     public List<Renderer> frontPartRenderer;
     public List<int> frontPartMaterialIndex;
-    
+    [Space(40)]
     public List<Renderer> rearPartRenderer;
     public List<int> rearPartMaterialIndex;
-    
+    [Space(40)]
     public List<Renderer> leftPartRenderer;
     public List<int> leftPartMaterialIndex;
-    
+    [Space(40)]
     public List<Renderer> rightPartRenderer;
     public List<int> rightPartMaterialIndex;
 
