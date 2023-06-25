@@ -16517,6 +16517,27 @@ MonoBehaviour:
   isRearPartDamagedBefore: 0
   isLeftPartDamagedBefore: 0
   isRightPartDamagedBefore: 0
+  frontPartRenderer:
+  - {fileID: 6988045200171917966}
+  - {fileID: 6988045200171917956}
+  - {fileID: 6988045200171917952}
+  frontPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
+  frontPartMaterialIndex: 010000000000000000000000
+  rearPartRenderer:
+  - {fileID: 6988045200171917978}
+  - {fileID: 6988045200171917972}
+  rearPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
+  rearPartMaterialIndex: 0100000000000000
+  leftPartRenderer:
+  - {fileID: 6988045200171917958}
+  - {fileID: 6988045200171917976}
+  leftPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
+  leftPartMaterialIndex: 0200000001000000
+  rightPartRenderer:
+  - {fileID: 6988045200171917968}
+  - {fileID: 6988045200171917970}
+  rightPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
+  rightPartMaterialIndex: 0200000001000000
 --- !u!1 &4493774594732186762
 GameObject:
   m_ObjectHideFlags: 0
@@ -22158,7 +22179,7 @@ GameObject:
   - component: {fileID: 7818891289079349848}
   - component: {fileID: 7818891289079349849}
   m_Layer: 10
-  m_Name: Hood
+  m_Name: FrontHood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -22971,7 +22992,7 @@ GameObject:
   - component: {fileID: 7818891289079349887}
   - component: {fileID: 7818891289079349881}
   m_Layer: 10
-  m_Name: Trunk
+  m_Name: RearTrunk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

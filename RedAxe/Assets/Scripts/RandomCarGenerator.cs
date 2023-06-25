@@ -16,65 +16,56 @@ public class RandomCarGenerator : MonoBehaviour
     {
         foreach (var pos in spawnPoints)
         {
-            car = Instantiate(prefabs[Random.Range(0, prefabs.Count)], pos.position, pos.rotation);
+            car = Instantiate(prefabs[0], pos.position, pos.rotation);
             var carAttributes = car.GetComponent<CarAttributes>();
-            
+            CreateRandomDamage(carAttributes);
+            carAttributes.StartModification();
         }
     }
 
     private void CreateRandomDamage(CarAttributes carAttributes)
     {
-        if (Random.Range(0, 2) == 0)
+        const float possibility = 0.5f;
+
+        CreateRandomPartDamage(carAttributes, "front", possibility);
+        CreateRandomPartDamage(carAttributes, "rear", possibility);
+        CreateRandomPartDamage(carAttributes, "left", possibility);
+        CreateRandomPartDamage(carAttributes, "right", possibility);
+    }
+
+    private void CreateRandomPartDamage(CarAttributes carAttributes, string partName, float possibility)
+    {
+        if (Random.Range(0, 1 / possibility) == 0)
         {
-            carAttributes.frontDamagePercentage = Random.Range(0, 100);
-            carAttributes.isFrontPartDamagedBefore = true;
+            SetPartDamage(carAttributes, partName);
+            carAttributes.SetPartPaintedBefore(partName, true);
         }
-        else if(Random.Range(0, 2) == 0)
+        else if (Random.Range(0, 1 / possibility) == 0)
         {
-            carAttributes.isFrontPartDamagedBefore = true;
-        }
-        else
-        {
-            carAttributes.isFrontPartDamagedBefore = false;
-        }
-        if (Random.Range(0, 2) == 0)
-        {
-            carAttributes.rearDamagePercentage = Random.Range(0, 100);
-            carAttributes.isRearPartDamagedBefore = true;
-        }
-        else if(Random.Range(0, 2) == 0)
-        {
-            carAttributes.isRearPartDamagedBefore = true;
+            carAttributes.SetPartPaintedBefore(partName, true);
         }
         else
         {
-            carAttributes.isRearPartDamagedBefore = false;
+            carAttributes.SetPartPaintedBefore(partName, false);
         }
-        if (Random.Range(0, 2) == 0)
+    }
+
+    private void SetPartDamage(CarAttributes carAttributes, string partName)
+    {
+        switch (partName)
         {
-            carAttributes.leftDamagePercentage = Random.Range(0, 100);
-            carAttributes.isLeftPartDamagedBefore = true;
-        }
-        else if(Random.Range(0, 2) == 0)
-        {
-            carAttributes.isLeftPartDamagedBefore = true;
-        }
-        else
-        {
-            carAttributes.isLeftPartDamagedBefore = false;
-        }
-        if (Random.Range(0, 2) == 0)
-        {
-            carAttributes.rightDamagePercentage = Random.Range(0, 100);
-            carAttributes.isRightPartDamagedBefore = true;
-        }
-        else if(Random.Range(0, 2) == 0)
-        {
-            carAttributes.isRightPartDamagedBefore = true;
-        }
-        else
-        {
-            carAttributes.isRightPartDamagedBefore = false;
+            case "front":
+                carAttributes.frontDamagePercentage = Random.Range(0, 100);
+                break;
+            case "rear":
+                carAttributes.rearDamagePercentage = Random.Range(0, 100);
+                break;
+            case "left":
+                carAttributes.leftDamagePercentage = Random.Range(0, 100);
+                break;
+            case "right":
+                carAttributes.rightDamagePercentage = Random.Range(0, 100);
+                break;
         }
     }
 }
