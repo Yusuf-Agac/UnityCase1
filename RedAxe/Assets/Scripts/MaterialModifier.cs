@@ -2,8 +2,9 @@ using System.Collections.Generic;
 using UnityEngine;
 public static class MaterialModifier
 {
-    public static void ChangeNormalMap(float value, List<Renderer> objectRenderers, Material targetMaterial, List<int> materialIndex)
+    public static void ChangeNormalMap(float value, List<Renderer> objectRenderers, List<int> materialIndex)
     {
+        const float damageMultiplier = 1.5f;
         for (int i = 0; i < objectRenderers.Count; i++)
         {
             // Get the materials array from the Renderer
@@ -16,7 +17,7 @@ public static class MaterialModifier
                 Material newMaterial = new Material(materials[materialIndex[i]]);
 
                 // Modify the normal map value (assuming "_BumpScale" is the name of the normal map property)
-                newMaterial.SetFloat("_BumpScale", value*2);
+                newMaterial.SetFloat("_BumpScale", value * damageMultiplier);
 
                 // Assign the new material to the specific material index
                 materials[materialIndex[i]] = newMaterial;
@@ -30,9 +31,9 @@ public static class MaterialModifier
             }
         }
     }
-    public static void ChangeMaterialColor(List<Renderer> objectRenderers, Material targetMaterial, List<int> materialIndex)
+    public static void ChangeMaterialColor(List<Renderer> objectRenderers, List<int> materialIndex)
     {
-        const float paintPercentage = 0.15f;
+        const float paintPercentage = 0.20f;
         for (int i = 0; i < objectRenderers.Count; i++)
         {
             // Get the materials array from the Renderer

@@ -14442,14 +14442,33 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePrice: 7000
+  bodyDamagePercentage: 0
   frontDamagePercentage: 0
   rearDamagePercentage: 0
   leftDamagePercentage: 0
   rightDamagePercentage: 0
-  isFrontPartDamagedBefore: 0
-  isRearPartDamagedBefore: 0
-  isLeftPartDamagedBefore: 0
-  isRightPartDamagedBefore: 0
+  isBodyPaintedBefore: 0
+  isFrontPartPaintedBefore: 0
+  isRearPartPaintedBefore: 0
+  isLeftPartPaintedBefore: 0
+  isRightPartPaintedBefore: 0
+  carMaterial: {fileID: 2100000, guid: 30a882aa8c9de6b488e5c7b83b092a66, type: 2}
+  bodyPartRenderer:
+  - {fileID: 5177510235479630247}
+  bodyPartMaterialIndex: 01000000
+  frontPartRenderer:
+  - {fileID: 5177510235479630251}
+  - {fileID: 5177510235479630263}
+  frontPartMaterialIndex: 0000000000000000
+  rearPartRenderer:
+  - {fileID: 5177510235479630157}
+  rearPartMaterialIndex: 00000000
+  leftPartRenderer:
+  - {fileID: 5177510235479630269}
+  leftPartMaterialIndex: 00000000
+  rightPartRenderer:
+  - {fileID: 5177510235479630151}
+  rightPartMaterialIndex: 00000000
 --- !u!1 &8604693750650246589
 GameObject:
   m_ObjectHideFlags: 0

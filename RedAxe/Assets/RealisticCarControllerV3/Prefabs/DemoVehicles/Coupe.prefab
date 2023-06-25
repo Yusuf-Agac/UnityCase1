@@ -16509,34 +16509,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePrice: 20000
+  bodyDamagePercentage: 0
   frontDamagePercentage: 0
   rearDamagePercentage: 0
   leftDamagePercentage: 0
   rightDamagePercentage: 0
-  isFrontPartDamagedBefore: 0
-  isRearPartDamagedBefore: 0
-  isLeftPartDamagedBefore: 0
-  isRightPartDamagedBefore: 0
+  isBodyPaintedBefore: 0
+  isFrontPartPaintedBefore: 0
+  isRearPartPaintedBefore: 0
+  isLeftPartPaintedBefore: 0
+  isRightPartPaintedBefore: 0
+  carMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
+  bodyPartRenderer:
+  - {fileID: 6988045200171917960}
+  bodyPartMaterialIndex: 05000000
   frontPartRenderer:
   - {fileID: 6988045200171917966}
   - {fileID: 6988045200171917956}
   - {fileID: 6988045200171917952}
-  frontPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
   frontPartMaterialIndex: 010000000000000000000000
   rearPartRenderer:
   - {fileID: 6988045200171917978}
   - {fileID: 6988045200171917972}
-  rearPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
   rearPartMaterialIndex: 0100000000000000
   leftPartRenderer:
   - {fileID: 6988045200171917958}
   - {fileID: 6988045200171917976}
-  leftPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
   leftPartMaterialIndex: 0200000001000000
   rightPartRenderer:
   - {fileID: 6988045200171917968}
   - {fileID: 6988045200171917970}
-  rightPartMaterial: {fileID: 2100000, guid: b04ec245539099d489d1bec463781e74, type: 2}
   rightPartMaterialIndex: 0200000001000000
 --- !u!1 &4493774594732186762
 GameObject:

@@ -7,48 +7,55 @@ using UnityEngine.Serialization;
 public class CarAttributes : MonoBehaviour
 {
     public int basePrice;
+    [ReadOnly] public float bodyDamagePercentage;
     [ReadOnly] public float frontDamagePercentage;
     [ReadOnly] public float rearDamagePercentage;
     [ReadOnly] public float leftDamagePercentage;
     [ReadOnly] public float rightDamagePercentage;
+    
+    [ReadOnly] public bool isBodyPaintedBefore;
     [ReadOnly] public bool isFrontPartPaintedBefore;
     [ReadOnly] public bool isRearPartPaintedBefore;
     [ReadOnly] public bool isLeftPartPaintedBefore;
     [ReadOnly] public bool isRightPartPaintedBefore;
-    
+
+    public List<Renderer> bodyPartRenderer;
+    public List<int> bodyPartMaterialIndex;
+
     public List<Renderer> frontPartRenderer;
-    public Material frontPartMaterial;
     public List<int> frontPartMaterialIndex;
     
     public List<Renderer> rearPartRenderer;
-    public Material rearPartMaterial;
     public List<int> rearPartMaterialIndex;
     
     public List<Renderer> leftPartRenderer;
-    public Material leftPartMaterial;
     public List<int> leftPartMaterialIndex;
     
     public List<Renderer> rightPartRenderer;
-    public Material rightPartMaterial;
     public List<int> rightPartMaterialIndex;
 
     public void StartModification()
     {
-        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(frontDamagePercentage/100, frontPartRenderer, frontPartMaterial, frontPartMaterialIndex);}
-        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(rearDamagePercentage/100, rearPartRenderer, rearPartMaterial, rearPartMaterialIndex);}
-        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(leftDamagePercentage/100, leftPartRenderer, leftPartMaterial, leftPartMaterialIndex);}
-        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(rightDamagePercentage/100, rightPartRenderer, rightPartMaterial, rightPartMaterialIndex);}
+        if(bodyDamagePercentage != 0){MaterialModifier.ChangeNormalMap(bodyDamagePercentage/100, bodyPartRenderer, bodyPartMaterialIndex);}
+        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(frontDamagePercentage/100, frontPartRenderer, frontPartMaterialIndex);}
+        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(rearDamagePercentage/100, rearPartRenderer, rearPartMaterialIndex);}
+        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(leftDamagePercentage/100, leftPartRenderer, leftPartMaterialIndex);}
+        if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(rightDamagePercentage/100, rightPartRenderer, rightPartMaterialIndex);}
         
-        if(isFrontPartPaintedBefore){MaterialModifier.ChangeMaterialColor(frontPartRenderer, frontPartMaterial, frontPartMaterialIndex);}
-        if(isRearPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rearPartRenderer, rearPartMaterial, rearPartMaterialIndex);}
-        if(isLeftPartPaintedBefore){MaterialModifier.ChangeMaterialColor(leftPartRenderer, leftPartMaterial, leftPartMaterialIndex);}
-        if(isRightPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterial, rightPartMaterialIndex);}
+        if(isBodyPaintedBefore){MaterialModifier.ChangeMaterialColor(bodyPartRenderer, bodyPartMaterialIndex);}
+        if(isFrontPartPaintedBefore){MaterialModifier.ChangeMaterialColor(frontPartRenderer, frontPartMaterialIndex);}
+        if(isRearPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rearPartRenderer, rearPartMaterialIndex);}
+        if(isLeftPartPaintedBefore){MaterialModifier.ChangeMaterialColor(leftPartRenderer, leftPartMaterialIndex);}
+        if(isRightPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterialIndex);}
     }
     
 public void SetPartPaintedBefore(string partName, bool isPaintedBefore)
     {
         switch (partName)
         {
+            case "body":
+                isBodyPaintedBefore = isPaintedBefore;
+                break;
             case "front":
                 isFrontPartPaintedBefore = isPaintedBefore;
                 break;

@@ -11606,14 +11606,35 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   basePrice: 100000
+  bodyDamagePercentage: 0
   frontDamagePercentage: 0
   rearDamagePercentage: 0
   leftDamagePercentage: 0
   rightDamagePercentage: 0
-  isFrontPartDamagedBefore: 0
-  isRearPartDamagedBefore: 0
-  isLeftPartDamagedBefore: 0
-  isRightPartDamagedBefore: 0
+  isBodyPaintedBefore: 0
+  isFrontPartPaintedBefore: 0
+  isRearPartPaintedBefore: 0
+  isLeftPartPaintedBefore: 0
+  isRightPartPaintedBefore: 0
+  carMaterial: {fileID: 2100000, guid: 7bfe2a8841e48544fa293dd4b7eeec66, type: 2}
+  bodyPartRenderer:
+  - {fileID: 9108472976166482565}
+  bodyPartMaterialIndex: 00000000
+  frontPartRenderer:
+  - {fileID: 1398080479050996423}
+  - {fileID: 7480299261034796124}
+  frontPartMaterialIndex: 0000000000000000
+  rearPartRenderer:
+  - {fileID: 4274235486901424485}
+  - {fileID: 1892684388679926644}
+  - {fileID: 227851958831116021}
+  rearPartMaterialIndex: 000000000000000000000000
+  leftPartRenderer:
+  - {fileID: 5395187808913227317}
+  leftPartMaterialIndex: 00000000
+  rightPartRenderer:
+  - {fileID: 6660222233672919658}
+  rightPartMaterialIndex: 00000000
 --- !u!1 &3354115180106329301
 GameObject:
   m_ObjectHideFlags: 0
@@ -13910,7 +13931,7 @@ GameObject:
   - component: {fileID: 4978816368731209944}
   - component: {fileID: 4978816368731209945}
   m_Layer: 10
-  m_Name: Hood
+  m_Name: FrontHood
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -6,17 +6,14 @@ public class RandomCarGenerator : MonoBehaviour
 {
     public List<GameObject> prefabs;
     public List<Transform> spawnPoints;
-    private float frontDamagePercentage;
-    private float rearDamagePercentage;
-    private float leftDamagePercentage;
-    private float rightDamagePercentage;
     
     private GameObject car;
+    
     void Start()
     {
         foreach (var pos in spawnPoints)
         {
-            car = Instantiate(prefabs[0], pos.position, pos.rotation);
+            car = Instantiate(prefabs[Random.Range(0, prefabs.Count)], pos.position, pos.rotation);
             var carAttributes = car.GetComponent<CarAttributes>();
             CreateRandomDamage(carAttributes);
             carAttributes.StartModification();
@@ -25,8 +22,9 @@ public class RandomCarGenerator : MonoBehaviour
 
     private void CreateRandomDamage(CarAttributes carAttributes)
     {
-        const float possibility = 0.5f;
-
+        float possibility = Random.Range(0.05f, 0.3f);
+        
+        CreateRandomPartDamage(carAttributes, "body", possibility);
         CreateRandomPartDamage(carAttributes, "front", possibility);
         CreateRandomPartDamage(carAttributes, "rear", possibility);
         CreateRandomPartDamage(carAttributes, "left", possibility);
@@ -35,12 +33,12 @@ public class RandomCarGenerator : MonoBehaviour
 
     private void CreateRandomPartDamage(CarAttributes carAttributes, string partName, float possibility)
     {
-        if (Random.Range(0, 1 / possibility) == 0)
+        if ((int)Random.Range(0, 1 - (1 / possibility)) == 0)
         {
             SetPartDamage(carAttributes, partName);
             carAttributes.SetPartPaintedBefore(partName, true);
         }
-        else if (Random.Range(0, 1 / possibility) == 0)
+        else if ((int)Random.Range(0, 1 - (1 / possibility)) == 0)
         {
             carAttributes.SetPartPaintedBefore(partName, true);
         }
@@ -54,6 +52,9 @@ public class RandomCarGenerator : MonoBehaviour
     {
         switch (partName)
         {
+            case "body":
+                carAttributes.bodyDamagePercentage = Random.Range(0, 100);
+                break;
             case "front":
                 carAttributes.frontDamagePercentage = Random.Range(0, 100);
                 break;
