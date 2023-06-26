@@ -8,6 +8,7 @@ public class CarAttributes : MonoBehaviour
 {
     [Space(20)]
     public int basePrice;
+    [ReadOnly] public int salePrice;
     [Space(20)]
     [ReadOnly] public float bodyDamagePercentage;
     [ReadOnly] public float frontDamagePercentage;
@@ -49,6 +50,8 @@ public class CarAttributes : MonoBehaviour
         if(isRearPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rearPartRenderer, rearPartMaterialIndex);}
         if(isLeftPartPaintedBefore){MaterialModifier.ChangeMaterialColor(leftPartRenderer, leftPartMaterialIndex);}
         if(isRightPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterialIndex);}
+        
+        salePrice = CarPriceCalculator.CalculatePrice(this, GetComponent<RCC_CarControllerV3>());
     }
     
 public void SetPartPaintedBefore(string partName, bool isPaintedBefore)

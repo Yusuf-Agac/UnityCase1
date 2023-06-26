@@ -2676,6 +2676,7 @@ MonoBehaviour:
   rccCamera: {fileID: 1573623177}
   rccCameraObject: {fileID: 1573623176}
   interactionUI: {fileID: 1931335064}
+  cursor: {fileID: 61138194}
 --- !u!4 &1824983061
 Transform:
   m_ObjectHideFlags: 0
