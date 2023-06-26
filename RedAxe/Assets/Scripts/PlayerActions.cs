@@ -3,18 +3,20 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerActions : MonoBehaviour
 {
     private Camera cam;
     private GameObject car;
     private GameObject movement;
+    private RCC_CarControllerV3 rccCarControllerV3;
     
     public LayerMask targetLayerMask;
-    
     public RCC_Camera rccCamera;
     public GameObject rccCameraObject;
-    private RCC_CarControllerV3 rccCarControllerV3;
+    public GameObject interactionUI;
+    public Image cursor;
 
     private void Start()
     {
@@ -34,14 +36,24 @@ public class PlayerActions : MonoBehaviour
             {
                 if (hit.collider.CompareTag("Car"))   
                 {
+                    interactionUI.SetActive(true);
                     car = hit.collider.gameObject;
                     if (Input.GetKeyDown(KeyCode.E))
                     {
                         rccCarControllerV3 = car.GetComponent<RCC_CarControllerV3>();
                         GetInTheCar();
+                        interactionUI.SetActive(false);
                         yield break;
                     }
                 }
+                else
+                {
+                    interactionUI.SetActive(false);
+                }
+            }
+            else
+            {
+                interactionUI.SetActive(false);
             }
             yield return null;
         }
@@ -65,6 +77,8 @@ public class PlayerActions : MonoBehaviour
     {
         if (car)
         {
+            cursor.enabled = false;
+            
             rccCarControllerV3.enabled = true;
             rccCameraObject.SetActive(true);
             rccCamera.cameraTarget.playerVehicle = rccCarControllerV3;
@@ -77,6 +91,8 @@ public class PlayerActions : MonoBehaviour
     {
         if (car)
         {
+            cursor.enabled = true;
+            
             rccCameraObject.SetActive(false);
             rccCarControllerV3.enabled = false;
             
