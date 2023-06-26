@@ -46,6 +46,16 @@ public class PlayerActions : MonoBehaviour
                         yield break;
                     }
                 }
+                else if (hit.collider.CompareTag("NPC"))
+                {
+                    interactionUI.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        hit.collider.GetComponent<NPC>().StartInteraction();
+                        interactionUI.SetActive(false);
+                        yield break;
+                    }
+                }
                 else
                 {
                     interactionUI.SetActive(false);
