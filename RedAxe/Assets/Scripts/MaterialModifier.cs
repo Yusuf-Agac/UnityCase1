@@ -21,7 +21,7 @@ public static class MaterialModifier
 
     public static void ChangeMaterialColor(List<Renderer> objectRenderers, List<int> materialIndex)
     {
-        const float paintPercentage = 0.20f;
+        const float paintPercentage = 0.25f;
         for (int i = 0; i < objectRenderers.Count; i++)
         {
             Material[] materials = objectRenderers[i].materials;

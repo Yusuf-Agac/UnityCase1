@@ -16135,9 +16135,10 @@ GameObject:
   - component: {fileID: 4493774594652649357}
   - component: {fileID: 4493774594652649358}
   - component: {fileID: 3931768671327382452}
+  - component: {fileID: 6157103469189237209}
   m_Layer: 8
   m_Name: Coupe
-  m_TagString: Player
+  m_TagString: Car
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -16539,6 +16540,19 @@ MonoBehaviour:
   - {fileID: 6988045200171917968}
   - {fileID: 6988045200171917970}
   rightPartMaterialIndex: 0200000001000000
+--- !u!65 &6157103469189237209
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4493774594652649359}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1.97, y: 0.99, z: 1.82}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4493774594732186762
 GameObject:
   m_ObjectHideFlags: 0
