@@ -25,10 +25,10 @@ public static class CarPriceCalculator
         result -= (carAttributes.rightDamagePercentage/100) * carAttributes.basePrice * RightPriceMultiplier;
         
         if (carAttributes.isBodyPaintedBefore){result -= carAttributes.basePrice * BodyPriceMultiplier * PaintedPriceMultiplier;}
-        if (carAttributes.isFrontPartPaintedBefore){result -= carAttributes.basePrice * FrontPriceMultiplier * PaintedPriceMultiplier;}
-        if (carAttributes.isRearPartPaintedBefore){result -= carAttributes.basePrice * RearPriceMultiplier * PaintedPriceMultiplier;}
-        if (carAttributes.isLeftPartPaintedBefore){result -= carAttributes.basePrice * LeftPriceMultiplier * PaintedPriceMultiplier;}
-        if (carAttributes.isRightPartPaintedBefore){result -= carAttributes.basePrice * RightPriceMultiplier * PaintedPriceMultiplier;}
+        if (carAttributes.isFrontPaintedBefore){result -= carAttributes.basePrice * FrontPriceMultiplier * PaintedPriceMultiplier;}
+        if (carAttributes.isRearPaintedBefore){result -= carAttributes.basePrice * RearPriceMultiplier * PaintedPriceMultiplier;}
+        if (carAttributes.isLeftPaintedBefore){result -= carAttributes.basePrice * LeftPriceMultiplier * PaintedPriceMultiplier;}
+        if (carAttributes.isRightPaintedBefore){result -= carAttributes.basePrice * RightPriceMultiplier * PaintedPriceMultiplier;}
         
         result += (carController.maxspeed * carAttributes.basePrice) * SpeedPriceMultiplier;
         result += (carController.maxEngineTorque * carAttributes.basePrice) * TorquePriceMultiplier;

@@ -14442,17 +14442,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88e3f2adc1ff1645b39d3d9295e919e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerBought: 0
   basePrice: 7000
+  salePrice: 0
+  carModelName: Ford F150
+  carModelYear: 1995
+  carKilometer: 2000000
+  carFuelType: 0
+  carGearType: 1
+  carColor: {r: 0.33333334, g: 0.3254902, b: 0.31764707, a: 1}
   bodyDamagePercentage: 0
   frontDamagePercentage: 0
   rearDamagePercentage: 0
   leftDamagePercentage: 0
   rightDamagePercentage: 0
   isBodyPaintedBefore: 0
-  isFrontPartPaintedBefore: 0
-  isRearPartPaintedBefore: 0
-  isLeftPartPaintedBefore: 0
-  isRightPartPaintedBefore: 0
+  isFrontPaintedBefore: 0
+  isRearPaintedBefore: 0
+  isLeftPaintedBefore: 0
+  isRightPaintedBefore: 0
   bodyPartRenderer:
   - {fileID: 5177510235479630247}
   bodyPartMaterialIndex: 01000000

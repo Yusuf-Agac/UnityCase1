@@ -16509,17 +16509,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b88e3f2adc1ff1645b39d3d9295e919e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  isPlayerBought: 0
   basePrice: 20000
+  salePrice: 0
+  carModelName: Mustang
+  carModelYear: 1967
+  carKilometer: 178000
+  carFuelType: 0
+  carGearType: 1
+  carColor: {r: 0.7830189, g: 0.32714942, b: 0.15881987, a: 1}
   bodyDamagePercentage: 0
   frontDamagePercentage: 0
   rearDamagePercentage: 0
   leftDamagePercentage: 0
   rightDamagePercentage: 0
   isBodyPaintedBefore: 0
-  isFrontPartPaintedBefore: 0
-  isRearPartPaintedBefore: 0
-  isLeftPartPaintedBefore: 0
-  isRightPartPaintedBefore: 0
+  isFrontPaintedBefore: 0
+  isRearPaintedBefore: 0
+  isLeftPaintedBefore: 0
+  isRightPaintedBefore: 0
   bodyPartRenderer:
   - {fileID: 6988045200171917960}
   bodyPartMaterialIndex: 05000000

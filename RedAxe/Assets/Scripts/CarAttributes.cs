@@ -6,11 +6,21 @@ using UnityEngine.Serialization;
 
 public class CarAttributes : MonoBehaviour
 {
+    public enum CarGearType {Automatic, Manual}
+    public enum CarFuelType {Gasoline, Diesel}
+
     [Space(20)]
     public bool isPlayerBought = false;
     [Space(20)]
     public int basePrice;
     [ReadOnly] public int salePrice;
+    [Space(20)]
+    public string carModelName;
+    public int carModelYear;
+    public int carKilometer;
+    public CarFuelType carFuelType;
+    public CarGearType carGearType;
+    public Color carColor;
     [Space(20)]
     [ReadOnly] public float bodyDamagePercentage;
     [ReadOnly] public float frontDamagePercentage;
@@ -19,10 +29,10 @@ public class CarAttributes : MonoBehaviour
     [ReadOnly] public float rightDamagePercentage;
     [Space(20)]
     [ReadOnly] public bool isBodyPaintedBefore;
-    [ReadOnly] public bool isFrontPartPaintedBefore;
-    [ReadOnly] public bool isRearPartPaintedBefore;
-    [ReadOnly] public bool isLeftPartPaintedBefore;
-    [ReadOnly] public bool isRightPartPaintedBefore;
+    [ReadOnly] public bool isFrontPaintedBefore;
+    [ReadOnly] public bool isRearPaintedBefore;
+    [ReadOnly] public bool isLeftPaintedBefore;
+    [ReadOnly] public bool isRightPaintedBefore;
     [Space(20)]
     public List<Renderer> bodyPartRenderer;
     public List<int> bodyPartMaterialIndex;
@@ -48,10 +58,10 @@ public class CarAttributes : MonoBehaviour
         if(frontDamagePercentage != 0){MaterialModifier.ChangeNormalMap(rightDamagePercentage/100, rightPartRenderer, rightPartMaterialIndex);}
         
         if(isBodyPaintedBefore){MaterialModifier.ChangeMaterialColor(bodyPartRenderer, bodyPartMaterialIndex);}
-        if(isFrontPartPaintedBefore){MaterialModifier.ChangeMaterialColor(frontPartRenderer, frontPartMaterialIndex);}
-        if(isRearPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rearPartRenderer, rearPartMaterialIndex);}
-        if(isLeftPartPaintedBefore){MaterialModifier.ChangeMaterialColor(leftPartRenderer, leftPartMaterialIndex);}
-        if(isRightPartPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterialIndex);}
+        if(isFrontPaintedBefore){MaterialModifier.ChangeMaterialColor(frontPartRenderer, frontPartMaterialIndex);}
+        if(isRearPaintedBefore){MaterialModifier.ChangeMaterialColor(rearPartRenderer, rearPartMaterialIndex);}
+        if(isLeftPaintedBefore){MaterialModifier.ChangeMaterialColor(leftPartRenderer, leftPartMaterialIndex);}
+        if(isRightPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterialIndex);}
         
         salePrice = CarPriceCalculator.CalculatePrice(this, GetComponent<RCC_CarControllerV3>());
     }
@@ -64,16 +74,16 @@ public void SetPartPaintedBefore(string partName, bool isPaintedBefore)
                 isBodyPaintedBefore = isPaintedBefore;
                 break;
             case "front":
-                isFrontPartPaintedBefore = isPaintedBefore;
+                isFrontPaintedBefore = isPaintedBefore;
                 break;
             case "rear":
-                isRearPartPaintedBefore = isPaintedBefore;
+                isRearPaintedBefore = isPaintedBefore;
                 break;
             case "left":
-                isLeftPartPaintedBefore = isPaintedBefore;
+                isLeftPaintedBefore = isPaintedBefore;
                 break;
             case "right":
-                isRightPartPaintedBefore = isPaintedBefore;
+                isRightPaintedBefore = isPaintedBefore;
                 break;
         }
     }
