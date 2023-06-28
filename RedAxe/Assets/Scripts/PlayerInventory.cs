@@ -6,12 +6,14 @@ using UnityEngine;
 
 public class PlayerInventory : MonoBehaviour
 {
-    public int money = 10000;
+    [ReadOnly] public int money = 10000;
     public TMP_Text moneyText;
 
-    private void Start()
+    private void Awake()
     {
+        money = PlayerPrefs.GetInt("Money", 10000);
         PrintMoney();
+        PlayerPrefs.SetInt("Money", money);
     }
 
     private void PrintMoney()
@@ -22,12 +24,14 @@ public class PlayerInventory : MonoBehaviour
     public void AddMoney(int amount)
     {
         money += amount;
+        PlayerPrefs.SetInt("Money", money);
         PrintMoney();
     }
     
     public void SubtractMoney(int amount)
     {
         money -= amount;
+        PlayerPrefs.SetInt("Money", money);
         PrintMoney();
     }
 }

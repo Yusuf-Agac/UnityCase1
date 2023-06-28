@@ -14,7 +14,7 @@ public class RandomCarGenerator : MonoBehaviour
         foreach (var pos in spawnPoints)
         {
             var car = Instantiate(prefabs[Random.Range(0, prefabs.Count)], pos.position, pos.rotation);
-            var npc = Instantiate(customerPrefab, pos.position, pos.rotation, car.transform);
+            var npc = pos.GetChild(0);
             npc.transform.localPosition += Vector3.left * 1.5f;
             npc.GetComponent<NPC>().carAttributes = car.GetComponent<CarAttributes>();
             var carAttributes = car.GetComponent<CarAttributes>();

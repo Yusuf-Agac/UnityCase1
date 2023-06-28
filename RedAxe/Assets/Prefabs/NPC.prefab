@@ -111,3 +111,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   carAttributes: {fileID: 0}
+  carTradeUI: {fileID: 0}

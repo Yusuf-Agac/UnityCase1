@@ -5,8 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Car
-  - Customer
   - TradeUI
+  - NPC
+  - Movement
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,8 @@ using UnityEngine.Serialization;
 public class CarAttributes : MonoBehaviour
 {
     [Space(20)]
+    public bool isPlayerBought = false;
+    [Space(20)]
     public int basePrice;
     [ReadOnly] public int salePrice;
     [Space(20)]

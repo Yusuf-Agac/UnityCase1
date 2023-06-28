@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 public class PlayerActions : MonoBehaviour
@@ -10,18 +11,25 @@ public class PlayerActions : MonoBehaviour
     private Camera cam;
     private GameObject car;
     private GameObject movement;
+    private FirstPersonMovement firstPersonMovement;
     private RCC_CarControllerV3 rccCarControllerV3;
+    private CarAttributes currentTradeCarAttributes;
+    private PlayerInventory playerInventory;
+    private GameObject currentNPC;
     
+    public GameObject carTradeUI;
+    public GameObject interactionUI;
+    public Image cursor;
     public LayerMask targetLayerMask;
     public RCC_Camera rccCamera;
     public GameObject rccCameraObject;
-    public GameObject interactionUI;
-    public Image cursor;
 
     private void Start()
     {
         cam = Camera.main;
         movement = transform.GetChild(0).gameObject;
+        firstPersonMovement = movement.GetComponent<FirstPersonMovement>();
+        playerInventory = GetComponent<PlayerInventory>();
         StartCoroutine(Player());
     }
 
@@ -38,7 +46,7 @@ public class PlayerActions : MonoBehaviour
                 {
                     interactionUI.SetActive(true);
                     car = hit.collider.gameObject;
-                    if (Input.GetKeyDown(KeyCode.E))
+                    if (Input.GetKeyDown(KeyCode.E) && car.GetComponent<CarAttributes>().isPlayerBought)
                     {
                         rccCarControllerV3 = car.GetComponent<RCC_CarControllerV3>();
                         GetInTheCar();
@@ -95,6 +103,7 @@ public class PlayerActions : MonoBehaviour
             
             movement.SetActive(false);
             StartCoroutine(Car());
+            Debug.Log("Get in the car");
         }
     }
     private void GetOutTheCar()
@@ -109,6 +118,48 @@ public class PlayerActions : MonoBehaviour
             movement.SetActive(true);
             movement.transform.position = car.transform.position + new Vector3(2, 0, 2);
             StartCoroutine(Player());
+            Debug.Log("Get out the car");
+        }
+    }
+    public void DisablePlayer(bool trade, CarAttributes carAttributes = null, GameObject NPC = null)
+    {
+        firstPersonMovement.enabled = false;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
+        if (trade)
+        {
+            carTradeUI.SetActive(true);
+            currentTradeCarAttributes = carAttributes;
+            currentNPC = NPC;
+        }
+        Debug.Log("Player disabled");
+    }
+    public void EnablePlayer(bool trade)
+    {
+        firstPersonMovement.enabled = true;
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.visible = false;
+        StartCoroutine(Player());
+        if (trade) {carTradeUI.SetActive(false);}
+        Debug.Log("Player enabled");
+    }
+    public void TradeCar()
+    {
+        if (currentTradeCarAttributes)
+        {
+            if (currentTradeCarAttributes.salePrice <= PlayerPrefs.GetInt("Money"))
+            {
+                playerInventory.SubtractMoney(currentTradeCarAttributes.salePrice);
+                PlayerPrefs.SetString("Car", currentTradeCarAttributes.name);
+                currentTradeCarAttributes.isPlayerBought = true;
+                EnablePlayer(true);
+                Destroy(currentNPC);
+                Debug.Log("Car bought");
+            }
+            else
+            {
+                Debug.Log("Not enough money");
+            }
         }
     }
 }

@@ -2,20 +2,26 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem.HID;
 using UnityEngine.Serialization;
+using UnityEngine.UI;
 
 public class NPC : MonoBehaviour
 {
     public CarAttributes carAttributes;
-    private GameObject carTradeUI;
+    
+    
+    private FirstPersonMovement playerMovement;
+    private PlayerActions playerActions;
 
     private void Awake()
     {
-        carTradeUI = GameObject.FindGameObjectWithTag("TradeUI");
+        playerMovement = GameObject.FindWithTag("Movement").GetComponent<FirstPersonMovement>();
+        playerActions = playerMovement.transform.parent.GetComponent<PlayerActions>();
     }
 
     public void StartInteraction()
     {
-        carTradeUI.SetActive(true);
+        playerActions.DisablePlayer(true, carAttributes, gameObject);
     }
 }
