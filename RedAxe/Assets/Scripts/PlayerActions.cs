@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Diagnostics;
 using TMPro;
@@ -15,7 +16,8 @@ public class PlayerActions : MonoBehaviour
     private CarAttributes currentTradeCarAttributes;
     private PlayerInventory playerInventory;
     private GameObject currentNPC;
-    
+    private Bargain bargain;
+
     public TMP_Text carNameText;
     public TMP_Text carModelYearText;
     public TMP_Text carKilometerText;
@@ -36,15 +38,18 @@ public class PlayerActions : MonoBehaviour
     public Image originalCarColorImage;
     public Image paintedCarColorImage;
     public Image damagedCarColorImage;
+    public TMP_InputField bargainInputField;
     public GameObject carTradeUI;
     public GameObject interactionUI;
     public Image cursor;
     public LayerMask targetLayerMask;
     public RCC_Camera rccCamera;
     public GameObject rccCameraObject;
+    public ChatBox chatBox;
 
     private void Start()
     {
+        bargain = GetComponent<Bargain>();
         cam = Camera.main;
         movement = transform.GetChild(0).gameObject;
         firstPersonMovement = movement.GetComponent<FirstPersonMovement>();
@@ -151,6 +156,7 @@ public class PlayerActions : MonoBehaviour
             currentTradeCarAttributes = carAttributes;
             currentNPC = NPC;
             ShowCarAttributesUI();
+            bargain.StartBargain(true, currentTradeCarAttributes.salePrice);
         }
         Debug.Log("Player disabled");
     }
@@ -187,7 +193,7 @@ public class PlayerActions : MonoBehaviour
         carRightDamageText.text = currentTradeCarAttributes.rightDamagePercentage == 0 ? "Right" : "Right " + currentTradeCarAttributes.rightDamagePercentage + "%";
     }
     
-    public void TradeCar()
+    public void BuyCar ()
     {
         if (currentTradeCarAttributes)
         {
@@ -196,14 +202,18 @@ public class PlayerActions : MonoBehaviour
                 playerInventory.SubtractMoney(currentTradeCarAttributes.salePrice);
                 PlayerPrefs.SetString("Car", currentTradeCarAttributes.name);
                 currentTradeCarAttributes.isPlayerBought = true;
-                EnablePlayer(true);
                 Destroy(currentNPC);
-                Debug.Log("Car bought");
+                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), true);
             }
             else
             {
-                Debug.Log("Not enough money");
+                chatBox.AddMessage("I don't have enough money. :(", true);
             }
         }
+    }
+
+    public void PlayerBargainRequest ()
+    {
+        bargain.BargainRequest(true, int.Parse(bargainInputField.text));
     }
 }
