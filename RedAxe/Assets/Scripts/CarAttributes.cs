@@ -14,6 +14,7 @@ public class CarAttributes : MonoBehaviour
     [Space(20)]
     public int basePrice;
     [ReadOnly] public int salePrice;
+    [ReadOnly] public int bargainPrice;
     [Space(40)]
     public string carModelName;
     public int carModelYear;
@@ -64,9 +65,15 @@ public class CarAttributes : MonoBehaviour
         if(isRightPaintedBefore){MaterialModifier.ChangeMaterialColor(rightPartRenderer, rightPartMaterialIndex);}
         
         salePrice = CarPriceCalculator.CalculatePrice(this, GetComponent<RCC_CarControllerV3>());
+        ResetBargainPrice();
     }
     
-public void SetPartPaintedBefore(string partName, bool isPaintedBefore)
+    public void ResetBargainPrice()
+    {
+        bargainPrice = salePrice;
+    }
+    
+    public void SetPartPaintedBefore(string partName, bool isPaintedBefore)
     {
         switch (partName)
         {
@@ -87,4 +94,5 @@ public void SetPartPaintedBefore(string partName, bool isPaintedBefore)
                 break;
         }
     }
+
 }

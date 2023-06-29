@@ -3,16 +3,18 @@ using UnityEngine;
 public class NPC : MonoBehaviour
 {
     public CarAttributes carAttributes;
-
-    private FirstPersonMovement playerMovement;
-    private PlayerActions playerActions;
-    private RectTransform canvasRectTransform;
+    [ReadOnly] public bool angryNotGonnaSell = false;
+    
+    private readonly Vector2 _randomToleranceRange = new Vector2(0.05f, 0.3f);
+    private FirstPersonMovement _playerMovement;
+    private PlayerActions _playerActions;
+    private RectTransform _canvasRectTransform;
 
     private void Awake()
     {
-        playerMovement = GameObject.FindWithTag("Movement").GetComponent<FirstPersonMovement>();
-        playerActions = playerMovement.transform.parent.GetComponent<PlayerActions>();
-        canvasRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
+        _playerMovement = GameObject.FindWithTag("Movement").GetComponent<FirstPersonMovement>();
+        _playerActions = _playerMovement.transform.parent.GetComponent<PlayerActions>();
+        _canvasRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
     }
     
     private void Update()
@@ -22,12 +24,29 @@ public class NPC : MonoBehaviour
     
     public void StartInteraction()
     {
-        playerActions.DisablePlayer(true, carAttributes, gameObject);
+        _playerActions.DisablePlayer(true, carAttributes, gameObject);
     }
 
     private void CanvasTagLookPlayer()
     {
-        canvasRectTransform.LookAt(playerMovement.transform);
-        canvasRectTransform.Rotate(0, 180, 0);
+        _canvasRectTransform.LookAt(_playerMovement.transform);
+        _canvasRectTransform.Rotate(0, 180, 0);
+    }
+    
+    public int BargainAnswer(int bargain)
+    {
+        float tolerance = Random.Range(_randomToleranceRange.x, _randomToleranceRange.y);
+        if (angryNotGonnaSell || Random.Range(0, 5) == 0 || carAttributes.salePrice / (float)bargain - 1 > 0.65f)
+        {
+            angryNotGonnaSell = true;
+            return 2;
+        }
+        
+        if ((carAttributes.salePrice / (float)bargain) - 1 <= tolerance)
+        {
+            carAttributes.bargainPrice = bargain;
+            return 0;
+        }
+        else { return 1; }
     }
 }

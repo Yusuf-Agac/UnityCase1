@@ -15,7 +15,7 @@ public class PlayerActions : MonoBehaviour
     private RCC_CarControllerV3 rccCarControllerV3;
     private CarAttributes currentTradeCarAttributes;
     private PlayerInventory playerInventory;
-    private GameObject currentNPC;
+    private NPC currentNPC;
     private Bargain bargain;
 
     public TMP_Text carNameText;
@@ -154,9 +154,9 @@ public class PlayerActions : MonoBehaviour
         {
             carTradeUI.SetActive(true);
             currentTradeCarAttributes = carAttributes;
-            currentNPC = NPC;
+            currentNPC = NPC.GetComponent<NPC>();
             ShowCarAttributesUI();
-            bargain.StartBargain(true, currentTradeCarAttributes.salePrice);
+            bargain.StartBargain(true, currentTradeCarAttributes.salePrice, currentNPC);
         }
         Debug.Log("Player disabled");
     }
@@ -197,12 +197,17 @@ public class PlayerActions : MonoBehaviour
     {
         if (currentTradeCarAttributes)
         {
-            if (currentTradeCarAttributes.salePrice <= PlayerPrefs.GetInt("Money"))
+            if (currentNPC.angryNotGonnaSell)
             {
-                playerInventory.SubtractMoney(currentTradeCarAttributes.salePrice);
+                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry), false);
+                return;
+            }
+            if (currentTradeCarAttributes.bargainPrice <= PlayerPrefs.GetInt("Money"))
+            {
+                playerInventory.SubtractMoney(currentTradeCarAttributes.bargainPrice);
                 PlayerPrefs.SetString("Car", currentTradeCarAttributes.name);
                 currentTradeCarAttributes.isPlayerBought = true;
-                Destroy(currentNPC);
+                Destroy(currentNPC.gameObject);
                 chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), true);
             }
             else

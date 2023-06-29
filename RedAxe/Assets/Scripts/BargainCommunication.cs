@@ -11,7 +11,8 @@ public class BargainCommunication
         SellerPrice,
         Bargain,
         Accept,
-        Reject
+        Reject,
+        Angry
     }
     
     private static readonly string[] InitialMessages = new string[]
@@ -55,14 +56,9 @@ public class BargainCommunication
     {
         "Okay, deal.",
         "Okay, it's a deal.",
-        "Okay, it's a deal. Pleasure doing business with you.",
-        "Pleasure doing business with you. Have a nice day.",
-        "Have a nice day. See you later.",
-        "Okay, it's a deal. Pleasure doing business with you. Have a nice day. See you later. Bye.",
-        "See you later. Bye. See you next time.",
-        "Bye. See you next time. See you soon.",
-        "See you next time. See you soon. See you tomorrow.",
-        "See you soon. See you tomorrow. See you next week."
+        "Pleasure doing business with you.",
+        "Okay, I'll take it.",
+        "Okay, I'll buy it."
     };
     
     private static readonly string[] RejectMessages = new string[]
@@ -72,7 +68,17 @@ public class BargainCommunication
         "Can you give me a better price?",
         "I can't go any lower.",
         "What are you talking about?",
-        "OMG are you kidding me?"
+        "OMG are you kidding me?",
+        "I'm calling the police, you are crazy."
+    };
+    
+    private static readonly string[] AngryMessages = new string[]
+    {
+        "I'm not gonna sell it to you.",
+        "I'm not gonna sell it to you, get out of here.",
+        "Get out of here.",
+        "I'm not gonna sell it to you, you are wasting my time.",
+        "Get out of here, you are wasting my time."
     };
     
     public static string GetRandomMessage(BargainState state)
@@ -91,6 +97,8 @@ public class BargainCommunication
                 return AcceptMessages[Random.Range(0, AcceptMessages.Length)];
             case BargainState.Reject:
                 return RejectMessages[Random.Range(0, RejectMessages.Length)];
+            case BargainState.Angry:
+                return AngryMessages[Random.Range(0, AngryMessages.Length)];
             default:
                 return "Invalid message state.";
         }
