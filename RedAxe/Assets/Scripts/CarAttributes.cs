@@ -14,14 +14,14 @@ public class CarAttributes : MonoBehaviour
     [Space(20)]
     public int basePrice;
     [ReadOnly] public int salePrice;
-    [Space(20)]
+    [Space(40)]
     public string carModelName;
     public int carModelYear;
     public int carKilometer;
     public CarFuelType carFuelType;
     public CarGearType carGearType;
     public Color carColor;
-    [Space(20)]
+    [Space(40)]
     [ReadOnly] public float bodyDamagePercentage;
     [ReadOnly] public float frontDamagePercentage;
     [ReadOnly] public float rearDamagePercentage;
