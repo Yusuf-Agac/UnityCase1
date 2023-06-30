@@ -7,6 +7,7 @@ public class PlayerCarGenerator : MonoBehaviour
 {
     public List<GameObject> carPrefabs;
     public List<string> carModelNames;
+    
     void Start()
     {
         int carCount = PlayerPrefs.GetInt("CarCount", 0);
@@ -30,6 +31,7 @@ public class PlayerCarGenerator : MonoBehaviour
             var carAttributesComponent = car.GetComponent<CarAttributes>();
             carAttributesComponent.FromData(carAttributes);
             carAttributesComponent.StartModification();
+            carAttributesComponent.AddCarToSellingBox();
         }
     }
 }

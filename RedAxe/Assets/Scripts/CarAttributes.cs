@@ -50,7 +50,10 @@ public class CarAttributes : MonoBehaviour
     [Space(40)]
     public List<Renderer> rightPartRenderer;
     public List<int> rightPartMaterialIndex;
-
+    [Space(40)] 
+    public ComputerActions computerActions;
+    
+    
     public void StartModification()
     {
         if(bodyDamagePercentage != 0){MaterialModifier.ChangeNormalMap(bodyDamagePercentage/100, bodyPartRenderer, bodyPartMaterialIndex);}
@@ -67,6 +70,8 @@ public class CarAttributes : MonoBehaviour
         
         salePrice = CarPriceCalculator.CalculatePrice(this, GetComponent<RCC_CarControllerV3>());
         ResetBargainPrice();
+
+        computerActions = GameObject.FindObjectOfType<ComputerActions>();
     }
     
     public void ResetBargainPrice()
@@ -146,5 +151,10 @@ public class CarAttributes : MonoBehaviour
         isRearPaintedBefore = data.isRearPaintedBefore;
         isLeftPaintedBefore = data.isLeftPaintedBefore;
         isRightPaintedBefore = data.isRightPaintedBefore;
+    }
+    
+    public void AddCarToSellingBox()
+    {
+        computerActions.AddCarToSellingBox(this);
     }
 }

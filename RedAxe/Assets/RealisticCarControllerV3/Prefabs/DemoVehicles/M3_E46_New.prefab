@@ -25217,8 +25217,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerBought: 0
+  carKey: 0
   basePrice: 9000
   salePrice: 0
+  bargainPrice: 0
   carModelName: M3 E46
   carModelYear: 2006
   carKilometer: 50000
@@ -25252,6 +25254,7 @@ MonoBehaviour:
   rightPartRenderer:
   - {fileID: 643155429584647784}
   rightPartMaterialIndex: 04000000
+  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
 --- !u!65 &8340737109506374026
 BoxCollider:
   m_ObjectHideFlags: 0

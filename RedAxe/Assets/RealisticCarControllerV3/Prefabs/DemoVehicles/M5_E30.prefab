@@ -7251,8 +7251,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerBought: 0
+  carKey: 0
   basePrice: 8000
   salePrice: 0
+  bargainPrice: 0
   carModelName: M5 E30
   carModelYear: 2001
   carKilometer: 98000
@@ -7288,6 +7290,7 @@ MonoBehaviour:
   - {fileID: 5709765356042216261}
   - {fileID: 7308058069947701120}
   rightPartMaterialIndex: 0000000000000000
+  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
 --- !u!65 &7483817684515137210
 BoxCollider:
   m_ObjectHideFlags: 0

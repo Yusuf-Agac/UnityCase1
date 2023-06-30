@@ -16550,6 +16550,7 @@ MonoBehaviour:
   - {fileID: 6988045200171917968}
   - {fileID: 6988045200171917970}
   rightPartMaterialIndex: 0200000001000000
+  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
 --- !u!65 &6157103469189237209
 BoxCollider:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using System.Collections;
 using System.Diagnostics;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 using Debug = UnityEngine.Debug;
 
@@ -46,9 +47,10 @@ public class PlayerActions : MonoBehaviour
     public RCC_Camera rccCamera;
     public GameObject rccCameraObject;
     public ChatBox chatBox;
-    public GameObject computer;
+    public GameObject computerCanvas;
     private Transform _camera;
     public GameObject cursorUI;
+    public DynamicContentHeight carSellingBoxContent;
 
     private void Start()
     {
@@ -97,7 +99,7 @@ public class PlayerActions : MonoBehaviour
                     interactionUI.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        computer.SetActive(true);
+                        computerCanvas.SetActive(true);
                         interactionUI.SetActive(false);
                         DisablePlayer();
                         StartCoroutine(Cam());
@@ -138,17 +140,18 @@ public class PlayerActions : MonoBehaviour
         yield return null;
         var cameraOldPosition = _camera.localPosition;
         var cameraOldRotation = _camera.localRotation;
-        var focus = computer.transform.parent.GetChild(1);
+        var focus = computerCanvas.transform.parent.GetChild(1);
         while (true)
         {
             if (_camera != null)
             {
-                _camera.position = Vector3.Lerp(_camera.position, focus.position, Time.deltaTime * 5f);
-                _camera.rotation = Quaternion.Lerp(_camera.rotation, focus.rotation, Time.deltaTime * 5f);
-                if (Vector3.Distance(_camera.position, computer.transform.parent.GetChild(1).position) < 0.01f)
+                _camera.position = Vector3.Lerp(_camera.position, focus.position, Time.deltaTime * 8f);
+                _camera.rotation = Quaternion.Lerp(_camera.rotation, focus.rotation, Time.deltaTime * 8f);
+                if (Vector3.Distance(_camera.position, computerCanvas.transform.parent.GetChild(1).position) < 0.004f)
                 {
                     _camera.position = focus.position;
                     _camera.rotation = focus.rotation;
+                    carSellingBoxContent.UpdateContentHeight();
                 }
             }
 
@@ -169,13 +172,13 @@ public class PlayerActions : MonoBehaviour
         yield return null;
         while (true)
         {
-            _camera.localPosition = Vector3.Lerp(_camera.localPosition, cameraOldPosition, Time.deltaTime * 5f);
-            _camera.localRotation = Quaternion.Lerp(_camera.localRotation, cameraOldRotation, Time.deltaTime * 5f);
-            if (Vector3.Distance(_camera.localPosition, cameraOldPosition) < 0.01f)
+            _camera.localPosition = Vector3.Lerp(_camera.localPosition, cameraOldPosition, Time.deltaTime * 8f);
+            _camera.localRotation = Quaternion.Lerp(_camera.localRotation, cameraOldRotation, Time.deltaTime * 8f);
+            if (Vector3.Distance(_camera.localPosition, cameraOldPosition) < 0.004f)
             {
                 _camera.localPosition = cameraOldPosition;
                 _camera.localRotation = cameraOldRotation;
-                computer.SetActive(false);
+                computerCanvas.SetActive(false);
                 EnablePlayer(false);
                 yield break;
             }

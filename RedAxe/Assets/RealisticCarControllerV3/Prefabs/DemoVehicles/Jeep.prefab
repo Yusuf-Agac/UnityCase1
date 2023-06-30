@@ -14443,8 +14443,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerBought: 0
+  carKey: 0
   basePrice: 7000
   salePrice: 0
+  bargainPrice: 0
   carModelName: Ford F150
   carModelYear: 1995
   carKilometer: 2000000
@@ -14477,6 +14479,7 @@ MonoBehaviour:
   rightPartRenderer:
   - {fileID: 5177510235479630151}
   rightPartMaterialIndex: 00000000
+  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
 --- !u!65 &8097836534193719363
 BoxCollider:
   m_ObjectHideFlags: 0
