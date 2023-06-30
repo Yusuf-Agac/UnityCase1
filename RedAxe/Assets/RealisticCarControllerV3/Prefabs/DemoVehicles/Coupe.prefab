@@ -16510,9 +16510,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerBought: 0
+  carKey: 0
   basePrice: 20000
   salePrice: 0
-  carModelName: Mustang
+  bargainPrice: 0
+  carModelName: Chevrolet Corvette
   carModelYear: 1967
   carKilometer: 178000
   carFuelType: 0

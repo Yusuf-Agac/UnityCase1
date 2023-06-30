@@ -11607,9 +11607,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isPlayerBought: 0
+  carKey: 0
   basePrice: 100000
   salePrice: 0
-  carModelName: Porsche
+  bargainPrice: 0
+  carModelName: Porsche 911
   carModelYear: 2005
   carKilometer: 24000
   carFuelType: 0

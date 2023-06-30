@@ -11,6 +11,7 @@ public class CarAttributes : MonoBehaviour
 
     [Space(20)]
     public bool isPlayerBought = false;
+    [ReadOnly] public int carKey;
     [Space(20)]
     public int basePrice;
     [ReadOnly] public int salePrice;
@@ -94,5 +95,56 @@ public class CarAttributes : MonoBehaviour
                 break;
         }
     }
+    
+    public CarAttributesData ToData()
+    {
+        CarAttributesData data = new CarAttributesData();
+        data.isPlayerBought = isPlayerBought;
+        data.carKey = carKey;
+        data.basePrice = basePrice;
+        data.salePrice = salePrice;
+        data.bargainPrice = bargainPrice;
+        data.carModelName = carModelName;
+        data.carModelYear = carModelYear;
+        data.carKilometer = carKilometer;
+        data.carFuelType = (int)carFuelType;
+        data.carGearType = (int)carGearType;
+        data.carColor = carColor;
+        data.bodyDamagePercentage = bodyDamagePercentage;
+        data.frontDamagePercentage = frontDamagePercentage;
+        data.rearDamagePercentage = rearDamagePercentage;
+        data.leftDamagePercentage = leftDamagePercentage;
+        data.rightDamagePercentage = rightDamagePercentage;
+        data.isBodyPaintedBefore = isBodyPaintedBefore;
+        data.isFrontPaintedBefore = isFrontPaintedBefore;
+        data.isRearPaintedBefore = isRearPaintedBefore;
+        data.isLeftPaintedBefore = isLeftPaintedBefore;
+        data.isRightPaintedBefore = isRightPaintedBefore;
+        return data;
+    }
 
+    public void FromData(CarAttributesData data)
+    {
+        isPlayerBought = data.isPlayerBought;
+        carKey = data.carKey;
+        basePrice = data.basePrice;
+        salePrice = data.salePrice;
+        bargainPrice = data.bargainPrice;
+        carModelName = data.carModelName;
+        carModelYear = data.carModelYear;
+        carKilometer = data.carKilometer;
+        carFuelType = (CarFuelType) data.carFuelType;
+        carGearType = (CarGearType) data.carGearType;
+        carColor = data.carColor;
+        bodyDamagePercentage = data.bodyDamagePercentage;
+        frontDamagePercentage = data.frontDamagePercentage;
+        rearDamagePercentage = data.rearDamagePercentage;
+        leftDamagePercentage = data.leftDamagePercentage;
+        rightDamagePercentage = data.rightDamagePercentage;
+        isBodyPaintedBefore = data.isBodyPaintedBefore;
+        isFrontPaintedBefore = data.isFrontPaintedBefore;
+        isRearPaintedBefore = data.isRearPaintedBefore;
+        isLeftPaintedBefore = data.isLeftPaintedBefore;
+        isRightPaintedBefore = data.isRightPaintedBefore;
+    }
 }

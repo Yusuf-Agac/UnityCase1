@@ -205,8 +205,8 @@ public class PlayerActions : MonoBehaviour
             if (currentTradeCarAttributes.bargainPrice <= PlayerPrefs.GetInt("Money"))
             {
                 playerInventory.SubtractMoney(currentTradeCarAttributes.bargainPrice);
-                PlayerPrefs.SetString("Car", currentTradeCarAttributes.name);
                 currentTradeCarAttributes.isPlayerBought = true;
+                PlayerCarSaver.SaveCarAttributes(currentTradeCarAttributes);
                 Destroy(currentNPC.gameObject);
                 chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), true);
             }
