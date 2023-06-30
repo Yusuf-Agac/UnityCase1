@@ -8,6 +8,7 @@ TagManager:
   - TradeUI
   - NPC
   - Movement
+  - Computer
   layers:
   - Default
   - TransparentFX

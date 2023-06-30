@@ -46,9 +46,13 @@ public class PlayerActions : MonoBehaviour
     public RCC_Camera rccCamera;
     public GameObject rccCameraObject;
     public ChatBox chatBox;
+    public GameObject computer;
+    private Transform _camera;
+    public GameObject cursorUI;
 
     private void Start()
     {
+        _camera = UnityEngine.Camera.main.transform;
         bargain = GetComponent<Bargain>();
         cam = Camera.main;
         movement = transform.GetChild(0).gameObject;
@@ -66,7 +70,7 @@ public class PlayerActions : MonoBehaviour
             Ray ray = cam.ScreenPointToRay(screenCenter);
             if (Physics.Raycast(ray, out var hit, 1, targetLayerMask))
             {
-                if (hit.collider.CompareTag("Car"))   
+                if (hit.collider.CompareTag("Car"))
                 {
                     interactionUI.SetActive(true);
                     car = hit.collider.gameObject;
@@ -88,6 +92,18 @@ public class PlayerActions : MonoBehaviour
                         yield break;
                     }
                 }
+                else if (hit.collider.CompareTag("Computer"))
+                {
+                    interactionUI.SetActive(true);
+                    if (Input.GetKeyDown(KeyCode.E))
+                    {
+                        computer.SetActive(true);
+                        interactionUI.SetActive(false);
+                        DisablePlayer();
+                        StartCoroutine(Cam());
+                        yield break;
+                    }
+                }
                 else
                 {
                     interactionUI.SetActive(false);
@@ -97,6 +113,7 @@ public class PlayerActions : MonoBehaviour
             {
                 interactionUI.SetActive(false);
             }
+
             yield return null;
         }
     }
@@ -111,6 +128,58 @@ public class PlayerActions : MonoBehaviour
                 GetOutTheCar();
                 yield break;
             }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator Cam()
+    {
+        yield return null;
+        var cameraOldPosition = _camera.localPosition;
+        var cameraOldRotation = _camera.localRotation;
+        var focus = computer.transform.parent.GetChild(1);
+        while (true)
+        {
+            if (_camera != null)
+            {
+                _camera.position = Vector3.Lerp(_camera.position, focus.position, Time.deltaTime * 5f);
+                _camera.rotation = Quaternion.Lerp(_camera.rotation, focus.rotation, Time.deltaTime * 5f);
+                if (Vector3.Distance(_camera.position, computer.transform.parent.GetChild(1).position) < 0.01f)
+                {
+                    _camera.position = focus.position;
+                    _camera.rotation = focus.rotation;
+                }
+            }
+
+            if (Input.GetKeyDown(KeyCode.E))
+            {
+                _camera.position = focus.position;
+                _camera.rotation = focus.rotation;
+                StartCoroutine(PlayerCam(cameraOldPosition, cameraOldRotation));
+                yield break;
+            }
+
+            yield return null;
+        }
+    }
+
+    private IEnumerator PlayerCam(Vector3 cameraOldPosition, Quaternion cameraOldRotation)
+    {
+        yield return null;
+        while (true)
+        {
+            _camera.localPosition = Vector3.Lerp(_camera.localPosition, cameraOldPosition, Time.deltaTime * 5f);
+            _camera.localRotation = Quaternion.Lerp(_camera.localRotation, cameraOldRotation, Time.deltaTime * 5f);
+            if (Vector3.Distance(_camera.localPosition, cameraOldPosition) < 0.01f)
+            {
+                _camera.localPosition = cameraOldPosition;
+                _camera.localRotation = cameraOldRotation;
+                computer.SetActive(false);
+                EnablePlayer(false);
+                yield break;
+            }
+
             yield return null;
         }
     }
@@ -120,34 +189,37 @@ public class PlayerActions : MonoBehaviour
         if (car)
         {
             cursor.enabled = false;
-            
+
             rccCarControllerV3.enabled = true;
             rccCameraObject.SetActive(true);
             rccCamera.cameraTarget.playerVehicle = rccCarControllerV3;
-            
+
             movement.SetActive(false);
             StartCoroutine(Car());
             Debug.Log("Get in the car");
         }
     }
+
     private void GetOutTheCar()
     {
         if (car)
         {
             cursor.enabled = true;
-            
+
             rccCameraObject.SetActive(false);
             rccCarControllerV3.enabled = false;
-            
+
             movement.SetActive(true);
             movement.transform.position = car.transform.position + new Vector3(2, 0, 2);
             StartCoroutine(Player());
             Debug.Log("Get out the car");
         }
     }
-    public void DisablePlayer(bool trade, CarAttributes carAttributes = null, GameObject NPC = null)
+
+    public void DisablePlayer(bool trade = false, CarAttributes carAttributes = null, GameObject NPC = null)
     {
         firstPersonMovement.enabled = false;
+        cursorUI.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         if (trade)
@@ -158,15 +230,22 @@ public class PlayerActions : MonoBehaviour
             ShowCarAttributesUI();
             bargain.StartBargain(true, currentTradeCarAttributes.salePrice, currentNPC);
         }
+
         Debug.Log("Player disabled");
     }
+
     public void EnablePlayer(bool trade)
     {
+        cursorUI.SetActive(true);
         firstPersonMovement.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
         StartCoroutine(Player());
-        if (trade) {carTradeUI.SetActive(false);}
+        if (trade)
+        {
+            carTradeUI.SetActive(false);
+        }
+
         Debug.Log("Player enabled");
     }
 
@@ -179,36 +258,54 @@ public class PlayerActions : MonoBehaviour
         carGearText.text = currentTradeCarAttributes.carGearType == 0 ? "Manual" : "Automatic";
         carPriceText.text = currentTradeCarAttributes.salePrice.ToString();
         carColorImage.color = currentTradeCarAttributes.carColor;
-        
-        carBodyDamageImage.color = currentTradeCarAttributes.bodyDamagePercentage > 0 ? damagedCarColorImage.color : currentTradeCarAttributes.isBodyPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carFrontDamageImage.color = currentTradeCarAttributes.frontDamagePercentage > 0 ? damagedCarColorImage.color : currentTradeCarAttributes.isFrontPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carRearDamageImage.color = currentTradeCarAttributes.rearDamagePercentage > 0 ? damagedCarColorImage.color : currentTradeCarAttributes.isRearPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carLeftDamageImage.color = currentTradeCarAttributes.leftDamagePercentage > 0 ? damagedCarColorImage.color : currentTradeCarAttributes.isLeftPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carRightDamageImage.color = currentTradeCarAttributes.rightDamagePercentage > 0 ? damagedCarColorImage.color : currentTradeCarAttributes.isRightPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        
-        carBodyDamageText.text = currentTradeCarAttributes.bodyDamagePercentage == 0 ? "Body" : "Body " + currentTradeCarAttributes.bodyDamagePercentage + "%";
-        carFrontDamageText.text = currentTradeCarAttributes.frontDamagePercentage == 0 ? "Front" : "Front " + currentTradeCarAttributes.frontDamagePercentage + "%";
-        carRearDamageText.text = currentTradeCarAttributes.rearDamagePercentage == 0 ? "Rear" : "Rear " + currentTradeCarAttributes.rearDamagePercentage + "%";
-        carLeftDamageText.text = currentTradeCarAttributes.leftDamagePercentage == 0 ? "Left" : "Left " + currentTradeCarAttributes.leftDamagePercentage + "%";
-        carRightDamageText.text = currentTradeCarAttributes.rightDamagePercentage == 0 ? "Right" : "Right " + currentTradeCarAttributes.rightDamagePercentage + "%";
+
+        carBodyDamageImage.color = currentTradeCarAttributes.bodyDamagePercentage > 0 ? damagedCarColorImage.color :
+            currentTradeCarAttributes.isBodyPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carFrontDamageImage.color = currentTradeCarAttributes.frontDamagePercentage > 0 ? damagedCarColorImage.color :
+            currentTradeCarAttributes.isFrontPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carRearDamageImage.color = currentTradeCarAttributes.rearDamagePercentage > 0 ? damagedCarColorImage.color :
+            currentTradeCarAttributes.isRearPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carLeftDamageImage.color = currentTradeCarAttributes.leftDamagePercentage > 0 ? damagedCarColorImage.color :
+            currentTradeCarAttributes.isLeftPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carRightDamageImage.color = currentTradeCarAttributes.rightDamagePercentage > 0 ? damagedCarColorImage.color :
+            currentTradeCarAttributes.isRightPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+
+        carBodyDamageText.text = currentTradeCarAttributes.bodyDamagePercentage == 0
+            ? "Body"
+            : "Body " + currentTradeCarAttributes.bodyDamagePercentage + "%";
+        carFrontDamageText.text = currentTradeCarAttributes.frontDamagePercentage == 0
+            ? "Front"
+            : "Front " + currentTradeCarAttributes.frontDamagePercentage + "%";
+        carRearDamageText.text = currentTradeCarAttributes.rearDamagePercentage == 0
+            ? "Rear"
+            : "Rear " + currentTradeCarAttributes.rearDamagePercentage + "%";
+        carLeftDamageText.text = currentTradeCarAttributes.leftDamagePercentage == 0
+            ? "Left"
+            : "Left " + currentTradeCarAttributes.leftDamagePercentage + "%";
+        carRightDamageText.text = currentTradeCarAttributes.rightDamagePercentage == 0
+            ? "Right"
+            : "Right " + currentTradeCarAttributes.rightDamagePercentage + "%";
     }
-    
-    public void BuyCar ()
+
+    public void BuyCar()
     {
         if (currentTradeCarAttributes)
         {
             if (currentNPC.angryNotGonnaSell)
             {
-                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry), false);
+                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry),
+                    false);
                 return;
             }
+
             if (currentTradeCarAttributes.bargainPrice <= PlayerPrefs.GetInt("Money"))
             {
                 playerInventory.SubtractMoney(currentTradeCarAttributes.bargainPrice);
                 currentTradeCarAttributes.isPlayerBought = true;
                 PlayerCarSaver.SaveCarAttributes(currentTradeCarAttributes);
                 Destroy(currentNPC.gameObject);
-                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), true);
+                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept),
+                    true);
             }
             else
             {
@@ -217,7 +314,7 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public void PlayerBargainRequest ()
+    public void PlayerBargainRequest()
     {
         bargain.BargainRequest(true, int.Parse(bargainInputField.text));
     }
