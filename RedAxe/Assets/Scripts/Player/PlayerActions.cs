@@ -9,60 +9,69 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerActions : MonoBehaviour
 {
-    private Camera cam;
-    private GameObject car;
-    private GameObject movement;
-    private FirstPersonMovement firstPersonMovement;
-    private RCC_CarControllerV3 rccCarControllerV3;
-    private CarAttributes currentTradeCarAttributes;
-    private PlayerInventory playerInventory;
-    private Npc currentNPC;
-    private Bargain bargain;
-
+    private Camera _camera;
+    private GameObject _car;
+    private GameObject _movement;
+    private FirstPersonMovement _firstPersonMovement;
+    private RCC_CarControllerV3 _rccCarControllerV3;
+    private CarAttributes _currentTradeCarAttributes;
+    private PlayerInventory _playerInventory;
+    private Npc _currentNpc;
+    private Bargain _bargain;
+    
+    [Space(30)]
     public TMP_Text carNameText;
     public TMP_Text carModelYearText;
     public TMP_Text carKilometerText;
     public TMP_Text carGearText;
     public TMP_Text carFuelText;
     public TMP_Text carPriceText;
+    [Space(30)]
     public Image carColorImage;
     public Image carBodyDamageImage;
     public Image carFrontDamageImage;
     public Image carRearDamageImage;
     public Image carLeftDamageImage;
     public Image carRightDamageImage;
+    [Space(30)]
     public TMP_Text carBodyDamageText;
     public TMP_Text carFrontDamageText;
     public TMP_Text carRearDamageText;
     public TMP_Text carLeftDamageText;
     public TMP_Text carRightDamageText;
+    [Space(30)]
     public Image originalCarColorImage;
     public Image paintedCarColorImage;
     public Image damagedCarColorImage;
+    [Space(30)]
     public TMP_InputField bargainInputField;
+    [Space(30)]
     public GameObject carTradeUI;
     public GameObject carSellUI;
     public GameObject carBuyUI;
+    [Space(30)]
     public GameObject interactionUI;
     public Image cursor;
-    public LayerMask targetLayerMask;
+    public GameObject cursorUI;
+    [Space(30)]
     public RCC_Camera rccCamera;
+    private Transform _cameraTransform;
     public GameObject rccCameraObject;
+    public LayerMask targetLayerMask;
+    [Space(30)]
     public ChatBox chatBox;
     public GameObject computerCanvas;
-    private Transform _camera;
-    public GameObject cursorUI;
-    public DynamicContentHeight carSellingBoxContent;
+    public DynamicContentHeight ComputerContent;
     public ComputerActions computerActions;
 
     private void Start()
     {
-        _camera = UnityEngine.Camera.main.transform;
-        bargain = GetComponent<Bargain>();
-        cam = Camera.main;
-        movement = transform.GetChild(0).gameObject;
-        firstPersonMovement = movement.GetComponent<FirstPersonMovement>();
-        playerInventory = GetComponent<PlayerInventory>();
+        _cameraTransform = UnityEngine.Camera.main.transform;
+        _bargain = GetComponent<Bargain>();
+        _camera = Camera.main;
+        _movement = transform.GetChild(0).gameObject;
+        _firstPersonMovement = _movement.GetComponent<FirstPersonMovement>();
+        _playerInventory = GetComponent<PlayerInventory>();
         StartCoroutine(Player());
     }
 
@@ -72,21 +81,22 @@ public class PlayerActions : MonoBehaviour
         while (true)
         {
             Vector3 screenCenter = new Vector3(Screen.width / 2f, Screen.height / 2f, 0f);
-            Ray ray = cam.ScreenPointToRay(screenCenter);
+            Ray ray = _camera.ScreenPointToRay(screenCenter);
             if (Physics.Raycast(ray, out var hit, 1, targetLayerMask))
             {
                 if (hit.collider.CompareTag("Car"))
                 {
                     interactionUI.SetActive(true);
-                    car = hit.collider.gameObject;
-                    if (Input.GetKeyDown(KeyCode.E) && car.GetComponent<CarAttributes>().isPlayerBought)
+                    _car = hit.collider.gameObject;
+                    if (Input.GetKeyDown(KeyCode.E) && _car.GetComponent<CarAttributes>().isPlayerBought)
                     {
-                        rccCarControllerV3 = car.GetComponent<RCC_CarControllerV3>();
-                        GetInTheCar();
+                        _rccCarControllerV3 = _car.GetComponent<RCC_CarControllerV3>();
+                        GetInCar();
                         interactionUI.SetActive(false);
                         yield break;
                     }
                 }
+                
                 else if (hit.collider.CompareTag("NPC"))
                 {
                     interactionUI.SetActive(true);
@@ -97,6 +107,7 @@ public class PlayerActions : MonoBehaviour
                         yield break;
                     }
                 }
+                
                 else if (hit.collider.CompareTag("Computer"))
                 {
                     interactionUI.SetActive(true);
@@ -105,20 +116,22 @@ public class PlayerActions : MonoBehaviour
                         computerCanvas.SetActive(true);
                         interactionUI.SetActive(false);
                         DisablePlayer();
-                        StartCoroutine(Cam());
+                        StartCoroutine(ComputerCamera());
                         yield break;
                     }
                 }
+                
                 else
                 {
                     interactionUI.SetActive(false);
                 }
             }
+            
             else
             {
                 interactionUI.SetActive(false);
             }
-
+            
             yield return null;
         }
     }
@@ -130,7 +143,7 @@ public class PlayerActions : MonoBehaviour
         {
             if (Input.GetKeyDown(KeyCode.E))
             {
-                GetOutTheCar();
+                GetOutCar();
                 yield break;
             }
 
@@ -138,31 +151,33 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    private IEnumerator Cam()
+    private IEnumerator ComputerCamera()
     {
-        yield return null;
-        var cameraOldPosition = _camera.localPosition;
-        var cameraOldRotation = _camera.localRotation;
+        var cameraOldPosition = _cameraTransform.localPosition;
+        var cameraOldRotation = _cameraTransform.localRotation;
         var focus = computerCanvas.transform.parent.GetChild(1);
+        
+        yield return null;
         while (true)
         {
-            if (_camera != null)
+            if (_cameraTransform != null)
             {
-                _camera.position = Vector3.Lerp(_camera.position, focus.position, Time.deltaTime * 8f);
-                _camera.rotation = Quaternion.Lerp(_camera.rotation, focus.rotation, Time.deltaTime * 8f);
-                if (Vector3.Distance(_camera.position, computerCanvas.transform.parent.GetChild(1).position) < 0.004f)
+                _cameraTransform.position = Vector3.Lerp(_cameraTransform.position, focus.position, Time.deltaTime * 8f);
+                _cameraTransform.rotation = Quaternion.Lerp(_cameraTransform.rotation, focus.rotation, Time.deltaTime * 8f);
+                
+                if (Vector3.Distance(_cameraTransform.position, computerCanvas.transform.parent.GetChild(1).position) < 0.004f)
                 {
-                    _camera.position = focus.position;
-                    _camera.rotation = focus.rotation;
-                    carSellingBoxContent.UpdateContentHeight();
+                    _cameraTransform.position = focus.position;
+                    _cameraTransform.rotation = focus.rotation;
+                    ComputerContent.UpdateContentHeight();
                 }
             }
 
             if (Input.GetKeyDown(KeyCode.E))
             {
-                _camera.position = focus.position;
-                _camera.rotation = focus.rotation;
-                StartCoroutine(PlayerCam(cameraOldPosition, cameraOldRotation));
+                _cameraTransform.position = focus.position;
+                _cameraTransform.rotation = focus.rotation;
+                StartCoroutine(PlayerCamera(cameraOldPosition, cameraOldRotation));
                 yield break;
             }
 
@@ -170,19 +185,22 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    private IEnumerator PlayerCam(Vector3 cameraOldPosition, Quaternion cameraOldRotation)
+    private IEnumerator PlayerCamera(Vector3 cameraOldPosition, Quaternion cameraOldRotation)
     {
         yield return null;
         while (true)
         {
-            _camera.localPosition = Vector3.Lerp(_camera.localPosition, cameraOldPosition, Time.deltaTime * 8f);
-            _camera.localRotation = Quaternion.Lerp(_camera.localRotation, cameraOldRotation, Time.deltaTime * 8f);
-            if (Vector3.Distance(_camera.localPosition, cameraOldPosition) < 0.004f)
+            _cameraTransform.localPosition = Vector3.Lerp(_cameraTransform.localPosition, cameraOldPosition, Time.deltaTime * 8f);
+            _cameraTransform.localRotation = Quaternion.Lerp(_cameraTransform.localRotation, cameraOldRotation, Time.deltaTime * 8f);
+            
+            if (Vector3.Distance(_cameraTransform.localPosition, cameraOldPosition) < 0.004f)
             {
-                _camera.localPosition = cameraOldPosition;
-                _camera.localRotation = cameraOldRotation;
+                _cameraTransform.localPosition = cameraOldPosition;
+                _cameraTransform.localRotation = cameraOldRotation;
+                
                 computerCanvas.SetActive(false);
                 EnablePlayer(false);
+                
                 yield break;
             }
 
@@ -190,163 +208,156 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    private void GetInTheCar()
+    private void GetInCar()
     {
-        if (car)
+        if (_car)
         {
             cursor.enabled = false;
 
-            rccCarControllerV3.enabled = true;
+            _rccCarControllerV3.enabled = true;
             rccCameraObject.SetActive(true);
-            rccCamera.cameraTarget.playerVehicle = rccCarControllerV3;
+            rccCamera.cameraTarget.playerVehicle = _rccCarControllerV3;
 
-            movement.SetActive(false);
+            _movement.SetActive(false);
             StartCoroutine(Car());
-            Debug.Log("Get in the car");
         }
     }
 
-    private void GetOutTheCar()
+    private void GetOutCar()
     {
-        if (car)
+        if (_car)
         {
             cursor.enabled = true;
 
             rccCameraObject.SetActive(false);
-            rccCarControllerV3.enabled = false;
+            _rccCarControllerV3.enabled = false;
 
-            movement.SetActive(true);
-            movement.transform.position = car.transform.position + new Vector3(2, 0, 2);
+            _movement.SetActive(true);
+            _movement.transform.position = _car.transform.position + new Vector3(2, 0, 2);
             StartCoroutine(Player());
-            Debug.Log("Get out the car");
         }
     }
 
     public void DisablePlayer(bool trade = false, CarAttributes carAttributes = null, GameObject NPC = null,
         Npc.NpcType npcType = Npc.NpcType.seller)
     {
-        firstPersonMovement.enabled = false;
+        _firstPersonMovement.enabled = false;
+        
         cursorUI.SetActive(false);
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
         if (trade)
         {
             carTradeUI.SetActive(true);
-            currentTradeCarAttributes = carAttributes;
-            currentNPC = NPC.GetComponent<Npc>();
+            _currentTradeCarAttributes = carAttributes;
+            _currentNpc = NPC.GetComponent<Npc>();
             ShowCarAttributesUI();
             if (npcType == Npc.NpcType.seller)
             {
                 carSellUI.SetActive(false);
                 carBuyUI.SetActive(true);
-                bargain.StartBargain(true, currentTradeCarAttributes.salePrice, currentNPC);
+                _bargain.StartBargain(true, _currentTradeCarAttributes.salePrice, _currentNpc);
             }
             else if (npcType == Npc.NpcType.buyer)
             {
                 carSellUI.SetActive(true);
                 carBuyUI.SetActive(false);
-                bargain.StartBargain(false, currentTradeCarAttributes.salePrice, currentNPC);
+                _bargain.StartBargain(false, _currentTradeCarAttributes.salePrice, _currentNpc);
             }
         }
-
-        Debug.Log("Player disabled");
     }
 
     public void EnablePlayer(bool trade)
     {
         cursorUI.SetActive(true);
-        firstPersonMovement.enabled = true;
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
+        _firstPersonMovement.enabled = true;
         StartCoroutine(Player());
         if (trade)
         {
             carTradeUI.SetActive(false);
         }
-
-        Debug.Log("Player enabled");
     }
 
     private void ShowCarAttributesUI()
     {
-        carNameText.text = currentTradeCarAttributes.carModelName;
-        carModelYearText.text = currentTradeCarAttributes.carModelYear.ToString();
-        carKilometerText.text = currentTradeCarAttributes.carKilometer.ToString();
-        carFuelText.text = currentTradeCarAttributes.carFuelType == 0 ? "Gasoline" : "Diesel";
-        carGearText.text = currentTradeCarAttributes.carGearType == 0 ? "Manual" : "Automatic";
-        carPriceText.text = currentTradeCarAttributes.salePrice.ToString();
-        carColorImage.color = currentTradeCarAttributes.carColor;
+        carNameText.text = _currentTradeCarAttributes.carModelName;
+        carModelYearText.text = _currentTradeCarAttributes.carModelYear.ToString();
+        carKilometerText.text = _currentTradeCarAttributes.carKilometer.ToString();
+        carFuelText.text = _currentTradeCarAttributes.carFuelType == 0 ? "Gasoline" : "Diesel";
+        carGearText.text = _currentTradeCarAttributes.carGearType == 0 ? "Manual" : "Automatic";
+        carPriceText.text = _currentTradeCarAttributes.salePrice.ToString();
+        carColorImage.color = _currentTradeCarAttributes.carColor;
 
-        carBodyDamageImage.color = currentTradeCarAttributes.bodyDamagePercentage > 0 ? damagedCarColorImage.color :
-            currentTradeCarAttributes.isBodyPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carFrontDamageImage.color = currentTradeCarAttributes.frontDamagePercentage > 0 ? damagedCarColorImage.color :
-            currentTradeCarAttributes.isFrontPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carRearDamageImage.color = currentTradeCarAttributes.rearDamagePercentage > 0 ? damagedCarColorImage.color :
-            currentTradeCarAttributes.isRearPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carLeftDamageImage.color = currentTradeCarAttributes.leftDamagePercentage > 0 ? damagedCarColorImage.color :
-            currentTradeCarAttributes.isLeftPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
-        carRightDamageImage.color = currentTradeCarAttributes.rightDamagePercentage > 0 ? damagedCarColorImage.color :
-            currentTradeCarAttributes.isRightPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carBodyDamageImage.color = _currentTradeCarAttributes.bodyDamagePercentage > 0 ? damagedCarColorImage.color :
+            _currentTradeCarAttributes.isBodyPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carFrontDamageImage.color = _currentTradeCarAttributes.frontDamagePercentage > 0 ? damagedCarColorImage.color :
+            _currentTradeCarAttributes.isFrontPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carRearDamageImage.color = _currentTradeCarAttributes.rearDamagePercentage > 0 ? damagedCarColorImage.color :
+            _currentTradeCarAttributes.isRearPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carLeftDamageImage.color = _currentTradeCarAttributes.leftDamagePercentage > 0 ? damagedCarColorImage.color :
+            _currentTradeCarAttributes.isLeftPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
+        carRightDamageImage.color = _currentTradeCarAttributes.rightDamagePercentage > 0 ? damagedCarColorImage.color :
+            _currentTradeCarAttributes.isRightPaintedBefore ? paintedCarColorImage.color : originalCarColorImage.color;
 
-        carBodyDamageText.text = currentTradeCarAttributes.bodyDamagePercentage == 0
+        carBodyDamageText.text = _currentTradeCarAttributes.bodyDamagePercentage == 0
             ? "Body"
-            : "Body " + currentTradeCarAttributes.bodyDamagePercentage + "%";
-        carFrontDamageText.text = currentTradeCarAttributes.frontDamagePercentage == 0
+            : "Body " + _currentTradeCarAttributes.bodyDamagePercentage + "%";
+        carFrontDamageText.text = _currentTradeCarAttributes.frontDamagePercentage == 0
             ? "Front"
-            : "Front " + currentTradeCarAttributes.frontDamagePercentage + "%";
-        carRearDamageText.text = currentTradeCarAttributes.rearDamagePercentage == 0
+            : "Front " + _currentTradeCarAttributes.frontDamagePercentage + "%";
+        carRearDamageText.text = _currentTradeCarAttributes.rearDamagePercentage == 0
             ? "Rear"
-            : "Rear " + currentTradeCarAttributes.rearDamagePercentage + "%";
-        carLeftDamageText.text = currentTradeCarAttributes.leftDamagePercentage == 0
+            : "Rear " + _currentTradeCarAttributes.rearDamagePercentage + "%";
+        carLeftDamageText.text = _currentTradeCarAttributes.leftDamagePercentage == 0
             ? "Left"
-            : "Left " + currentTradeCarAttributes.leftDamagePercentage + "%";
-        carRightDamageText.text = currentTradeCarAttributes.rightDamagePercentage == 0
+            : "Left " + _currentTradeCarAttributes.leftDamagePercentage + "%";
+        carRightDamageText.text = _currentTradeCarAttributes.rightDamagePercentage == 0
             ? "Right"
-            : "Right " + currentTradeCarAttributes.rightDamagePercentage + "%";
+            : "Right " + _currentTradeCarAttributes.rightDamagePercentage + "%";
     }
 
     public void BuyCar()
     {
-        if (currentTradeCarAttributes)
+        if (!_currentTradeCarAttributes) return;
+        
+        if (_currentNpc.angryNotGonnaSell)
         {
-            if (currentNPC.angryNotGonnaSell)
-            {
-                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry),
-                    false);
-                return;
-            }
+            chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry),
+                false);
+            return;
+        }
 
-            if (currentTradeCarAttributes.bargainPrice <= PlayerPrefs.GetInt("Money"))
-            {
-                playerInventory.SubtractMoney(currentTradeCarAttributes.bargainPrice);
-                currentTradeCarAttributes.isPlayerBought = true;
-                PlayerCarSaver.SaveCarAttributes(currentTradeCarAttributes);
-                Destroy(currentNPC.gameObject);
-                chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept),
-                    true);
-            }
-            else
-            {
-                chatBox.AddMessage("I don't have enough money. :(", true);
-            }
+        if (_currentTradeCarAttributes.bargainPrice <= PlayerPrefs.GetInt("Money"))
+        {
+            _playerInventory.SubtractMoney(_currentTradeCarAttributes.bargainPrice);
+            _currentTradeCarAttributes.isPlayerBought = true;
+            PlayerCarSaver.SaveCarAttributes(_currentTradeCarAttributes);
+            Destroy(_currentNpc.gameObject);
+            chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept),
+                true);
+        }
+        else
+        {
+            chatBox.AddMessage("I don't have enough money. :(", true);
         }
     }
 
     public void SellCar()
     {
-        if (!currentTradeCarAttributes) return;
-        playerInventory.AddMoney(currentTradeCarAttributes.bargainPrice);
-        PlayerCarDeleter.DeleteCarAttributes(currentTradeCarAttributes.carKey);
-        computerActions.RemoveCarFromSellingBox(currentTradeCarAttributes.carKey);
-        Destroy(currentTradeCarAttributes.gameObject);
-        Destroy(currentNPC.gameObject);
+        if (!_currentTradeCarAttributes) return;
+        _playerInventory.AddMoney(_currentTradeCarAttributes.bargainPrice);
+        PlayerCarDeleter.DeleteCarAttributes(_currentTradeCarAttributes.carKey);
+        computerActions.RemoveCarFromSellingBox(_currentTradeCarAttributes.carKey);
+        Destroy(_currentTradeCarAttributes.gameObject);
+        Destroy(_currentNpc.gameObject);
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), false);
     }
-
 
     public void PlayerBargainRequest()
     {
         bool isParsed = int.TryParse(bargainInputField.text, out var parsedPrice);
-        if(isParsed) { bargain.BargainRequest(true, parsedPrice); }
+        if(isParsed) { _bargain.BargainRequest(true, parsedPrice); }
     }
 }
