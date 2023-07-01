@@ -24,7 +24,7 @@ namespace Car
 
         private void CreateRandomDamage(CarAttributes carAttributes)
         {
-            float possibility = Random.Range(0.05f, 0.3f);
+            float possibility = Random.Range(0.05f, 0.4f);
         
             CreateRandomPartDamage(carAttributes, "body", possibility);
             CreateRandomPartDamage(carAttributes, "front", possibility);

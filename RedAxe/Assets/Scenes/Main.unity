@@ -6601,7 +6601,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -100, y: -116.8}
+  m_AnchoredPosition: {x: -75, y: -72.000015}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1028303851
@@ -8056,7 +8056,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 100, y: -116.8}
+  m_AnchoredPosition: {x: 75, y: -72}
   m_SizeDelta: {x: 60, y: 60}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1317298242
@@ -9299,18 +9299,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00486d24357fb2749a3b1309168858cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  prefabs:
+  carPrefabs:
   - {fileID: 4493774594652649359, guid: 8493f575c4fc2c341827f5191d376174, type: 3}
   - {fileID: 3354115180038256482, guid: 6e4f5358be5ec5142b505cdeab793b79, type: 3}
   - {fileID: 8604693750619759250, guid: b6c8a12b979de084c9fcb410d00706b5, type: 3}
   - {fileID: 8573549319431884798, guid: f5b24270dd3a52e4180206467601e919, type: 3}
   - {fileID: 2533337409777661332, guid: 9a667d070a973084e998d8667e8d2818, type: 3}
-  spawnPoints:
+  carSpawnPoints:
   - {fileID: 867607803}
   - {fileID: 2139925252}
   - {fileID: 687282303}
   - {fileID: 1702488998}
-  customerPrefab: {fileID: 3397306059360658610, guid: 8fb1d75502dc66846a180a56a4c00b3d, type: 3}
 --- !u!4 &1499872042
 Transform:
   m_ObjectHideFlags: 0
@@ -10420,7 +10419,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   contentTransform: {fileID: 1762991908}
-  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
+  computerBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
 --- !u!1 &1754992281
 GameObject:
   m_ObjectHideFlags: 0
@@ -10751,15 +10750,15 @@ MonoBehaviour:
   carBuyUI: {fileID: 963062544}
   interactionUI: {fileID: 1931335064}
   cursor: {fileID: 61138194}
+  cursorUI: {fileID: 61138191}
+  rccCamera: {fileID: 1573623177}
+  rccCameraObject: {fileID: 1573623176}
   targetLayerMask:
     serializedVersion: 2
     m_Bits: 256
-  rccCamera: {fileID: 1573623177}
-  rccCameraObject: {fileID: 1573623176}
   chatBox: {fileID: 507287942}
   computerCanvas: {fileID: 1489311216}
-  cursorUI: {fileID: 61138191}
-  carSellingBoxContent: {fileID: 1762991910}
+  ComputerContent: {fileID: 1762991910}
   computerActions: {fileID: 1744230018}
 --- !u!4 &1824983061
 Transform:
@@ -11609,7 +11608,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 392.3}
+  m_AnchoredPosition: {x: 0, y: 327.9}
   m_SizeDelta: {x: 379.6, y: 61}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &2053677080
