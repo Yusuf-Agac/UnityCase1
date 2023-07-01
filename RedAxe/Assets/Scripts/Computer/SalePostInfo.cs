@@ -32,14 +32,14 @@ public class SalePostInfo : MonoBehaviour
 
             saleCarAttributes.salePrice = isParsed ? parsedPrice : tempPrice;
             priceInputField.interactable = false;
-            saleCarAttributes.GetComponent<NpcBuyerGenerator>().StartGenerating();
+            saleCarAttributes.GetComponent<BuyerNpcGenerator>().StartGenerating();
         }
         else
         {
             priceInputField.text = "";
             saleCarAttributes.salePrice = tempPrice;
             priceInputField.interactable = true;
-            saleCarAttributes.GetComponent<NpcBuyerGenerator>().isGenerating = false;
+            saleCarAttributes.GetComponent<BuyerNpcGenerator>().isGenerating = false;
         }
     }
 

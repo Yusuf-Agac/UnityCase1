@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class NpcBuyerGenerator : MonoBehaviour
+public class BuyerNpcGenerator : MonoBehaviour
 {
     public GameObject npcPrefab;
     [ReadOnly] public bool isGenerating = false;
