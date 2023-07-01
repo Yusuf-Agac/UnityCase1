@@ -6854,6 +6854,7 @@ GameObject:
   - component: {fileID: 2533337409777661335}
   - component: {fileID: 2135102003733213922}
   - component: {fileID: 7483817684515137210}
+  - component: {fileID: 191746252043157715}
   m_Layer: 8
   m_Name: M5_E30
   m_TagString: Car
@@ -7290,7 +7291,7 @@ MonoBehaviour:
   - {fileID: 5709765356042216261}
   - {fileID: 7308058069947701120}
   rightPartMaterialIndex: 0000000000000000
-  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
+  computerActions: {fileID: 0}
 --- !u!65 &7483817684515137210
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -7304,6 +7305,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.97, y: 0.99, z: 1.82}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &191746252043157715
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2533337409777661332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7089e862e29fcae40b21ea0527f80106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcPrefab: {fileID: 3397306059360658610, guid: 8fb1d75502dc66846a180a56a4c00b3d, type: 3}
+  isGenerating: 0
 --- !u!1 &2533337409806562932
 GameObject:
   m_ObjectHideFlags: 0

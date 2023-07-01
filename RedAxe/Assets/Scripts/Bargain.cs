@@ -7,14 +7,14 @@ public class Bargain : MonoBehaviour
 {
     public ChatBox chatBox;
     private PlayerActions _playerActions;
-    private NPC _npc;
+    private Npc _npc;
 
     private void Start()
     {
         _playerActions = GetComponent<PlayerActions>();
     }
 
-    public void StartBargain (bool isPlayerBargain, int sellerPrice, NPC npc)
+    public void StartBargain (bool isPlayerBargain, int sellerPrice, Npc npc)
     {
         _npc = npc;
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Initial), isPlayerBargain);
@@ -26,6 +26,7 @@ public class Bargain : MonoBehaviour
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Initial), !isPlayerBargain);
         chatBox.AddMessage(AddPriceToMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.SellerPrice), sellerPrice), !isPlayerBargain);
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Thinking), isPlayerBargain);
+        if (!isPlayerBargain) { BargainRequest(false, npc.BargainOffer(sellerPrice)); }
     }
     
     public void AcceptBargain (bool isPlayerBargain)
@@ -36,7 +37,7 @@ public class Bargain : MonoBehaviour
         }
         else
         {
-            chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), false);
+            _playerActions.SellCar();
         }
     }
     
@@ -54,6 +55,7 @@ public class Bargain : MonoBehaviour
     
     public void BargainRequest (bool isPlayerBargain, int requestedPrice)
     {
+        if(!isPlayerBargain) { _npc.carAttributes.bargainPrice = requestedPrice; }
         if (isPlayerBargain && _npc.angryNotGonnaSell)
         {
             chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry), false);
@@ -63,11 +65,13 @@ public class Bargain : MonoBehaviour
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Thinking), !isPlayerBargain);
         if (isPlayerBargain)
         {
-            chatBox.AddMessage(_npc.BargainAnswer(requestedPrice) == 0 ? BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept) : _npc.BargainAnswer(requestedPrice) == 1 ? BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Reject) : BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry), false);
-        }
-        else
-        {
-            // TODO: Add player answer
+            int result = _npc.BargainAnswer(requestedPrice);
+            chatBox.AddMessage(result switch
+            {
+                0 => BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept),
+                1 => BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Reject),
+                _ => BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Angry)
+            }, false);
         }
     }
     

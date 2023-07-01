@@ -16,7 +16,7 @@ public class PlayerActions : MonoBehaviour
     private RCC_CarControllerV3 rccCarControllerV3;
     private CarAttributes currentTradeCarAttributes;
     private PlayerInventory playerInventory;
-    private NPC currentNPC;
+    private Npc currentNPC;
     private Bargain bargain;
 
     public TMP_Text carNameText;
@@ -41,6 +41,8 @@ public class PlayerActions : MonoBehaviour
     public Image damagedCarColorImage;
     public TMP_InputField bargainInputField;
     public GameObject carTradeUI;
+    public GameObject carSellUI;
+    public GameObject carBuyUI;
     public GameObject interactionUI;
     public Image cursor;
     public LayerMask targetLayerMask;
@@ -51,6 +53,7 @@ public class PlayerActions : MonoBehaviour
     private Transform _camera;
     public GameObject cursorUI;
     public DynamicContentHeight carSellingBoxContent;
+    public ComputerActions computerActions;
 
     private void Start()
     {
@@ -89,7 +92,7 @@ public class PlayerActions : MonoBehaviour
                     interactionUI.SetActive(true);
                     if (Input.GetKeyDown(KeyCode.E))
                     {
-                        hit.collider.GetComponent<NPC>().StartInteraction();
+                        hit.collider.GetComponent<Npc>().StartInteraction();
                         interactionUI.SetActive(false);
                         yield break;
                     }
@@ -219,7 +222,8 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
-    public void DisablePlayer(bool trade = false, CarAttributes carAttributes = null, GameObject NPC = null)
+    public void DisablePlayer(bool trade = false, CarAttributes carAttributes = null, GameObject NPC = null,
+        Npc.NpcType npcType = Npc.NpcType.seller)
     {
         firstPersonMovement.enabled = false;
         cursorUI.SetActive(false);
@@ -229,9 +233,20 @@ public class PlayerActions : MonoBehaviour
         {
             carTradeUI.SetActive(true);
             currentTradeCarAttributes = carAttributes;
-            currentNPC = NPC.GetComponent<NPC>();
+            currentNPC = NPC.GetComponent<Npc>();
             ShowCarAttributesUI();
-            bargain.StartBargain(true, currentTradeCarAttributes.salePrice, currentNPC);
+            if (npcType == Npc.NpcType.seller)
+            {
+                carSellUI.SetActive(false);
+                carBuyUI.SetActive(true);
+                bargain.StartBargain(true, currentTradeCarAttributes.salePrice, currentNPC);
+            }
+            else if (npcType == Npc.NpcType.buyer)
+            {
+                carSellUI.SetActive(true);
+                carBuyUI.SetActive(false);
+                bargain.StartBargain(false, currentTradeCarAttributes.salePrice, currentNPC);
+            }
         }
 
         Debug.Log("Player disabled");
@@ -317,8 +332,21 @@ public class PlayerActions : MonoBehaviour
         }
     }
 
+    public void SellCar()
+    {
+        if (!currentTradeCarAttributes) return;
+        playerInventory.AddMoney(currentTradeCarAttributes.bargainPrice);
+        PlayerCarDeleter.DeleteCarAttributes(currentTradeCarAttributes.carKey);
+        computerActions.RemoveCarFromSellingBox(currentTradeCarAttributes.carKey);
+        Destroy(currentTradeCarAttributes.gameObject);
+        Destroy(currentNPC.gameObject);
+        chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Accept), false);
+    }
+
+
     public void PlayerBargainRequest()
     {
-        bargain.BargainRequest(true, int.Parse(bargainInputField.text));
+        bool isParsed = int.TryParse(bargainInputField.text, out var parsedPrice);
+        if(isParsed) { bargain.BargainRequest(true, parsedPrice); }
     }
 }

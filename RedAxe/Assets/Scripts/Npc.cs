@@ -1,7 +1,14 @@
+using TMPro;
 using UnityEngine;
 
-public class NPC : MonoBehaviour
+public class Npc : MonoBehaviour
 {
+    public enum NpcType
+    {
+        seller,
+        buyer
+    }
+    public NpcType npcType = NpcType.seller;
     public CarAttributes carAttributes;
     [ReadOnly] public bool angryNotGonnaSell = false;
     
@@ -24,13 +31,35 @@ public class NPC : MonoBehaviour
     
     public void StartInteraction()
     {
-        _playerActions.DisablePlayer(true, carAttributes, gameObject);
+        _playerActions.DisablePlayer(true, carAttributes, gameObject, npcType);
     }
 
     private void CanvasTagLookPlayer()
     {
         _canvasRectTransform.LookAt(_playerMovement.transform);
         _canvasRectTransform.Rotate(0, 180, 0);
+    }
+    
+    public void ResetNpcTypeCanvas()
+    {
+        switch (npcType)
+        {
+            case NpcType.buyer:
+                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Buyer";
+                break;
+            case NpcType.seller:
+                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
+                break;
+            default:
+                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
+                break;
+        }
+    }
+    
+    public int BargainOffer(int price)
+    {
+        float discount = Random.Range(0f, 0.5f);
+        return price - (int)(price * discount);
     }
     
     public int BargainAnswer(int bargain)

@@ -11,5 +11,12 @@ public class ComputerActions : MonoBehaviour
     {
         var carSellingBox = Instantiate(carSellingBoxPrefab, contentTransform);
         carSellingBox.GetComponent<SalePostInfo>().SetInfo(carAttributes);
+        carSellingBox.name = carAttributes.carKey.ToString();
+    }
+    
+    public void RemoveCarFromSellingBox(int carKey)
+    {
+        var carSellingBox = contentTransform.Find(carKey.ToString()).gameObject;
+        Destroy(carSellingBox);
     }
 }

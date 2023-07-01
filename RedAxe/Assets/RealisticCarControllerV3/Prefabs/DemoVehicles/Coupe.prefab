@@ -16136,6 +16136,7 @@ GameObject:
   - component: {fileID: 4493774594652649358}
   - component: {fileID: 3931768671327382452}
   - component: {fileID: 6157103469189237209}
+  - component: {fileID: 8966102266403898000}
   m_Layer: 8
   m_Name: Coupe
   m_TagString: Car
@@ -16550,7 +16551,7 @@ MonoBehaviour:
   - {fileID: 6988045200171917968}
   - {fileID: 6988045200171917970}
   rightPartMaterialIndex: 0200000001000000
-  carSellingBoxPrefab: {fileID: 3132396368582346865, guid: df9e61af3e3929a4791aea8156e74728, type: 3}
+  computerActions: {fileID: 0}
 --- !u!65 &6157103469189237209
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -16564,6 +16565,20 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.97, y: 0.99, z: 1.82}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &8966102266403898000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4493774594652649359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7089e862e29fcae40b21ea0527f80106, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  npcPrefab: {fileID: 3397306059360658610, guid: 8fb1d75502dc66846a180a56a4c00b3d, type: 3}
+  isGenerating: 0
 --- !u!1 &4493774594732186762
 GameObject:
   m_ObjectHideFlags: 0
