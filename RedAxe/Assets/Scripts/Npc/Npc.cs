@@ -8,20 +8,23 @@ public class Npc : MonoBehaviour
         seller,
         buyer
     }
-    public NpcType npcType = NpcType.seller;
-    public CarAttributes carAttributes;
-    [ReadOnly] public bool angryNotGonnaSell = false;
     
+    public NpcType npcType = NpcType.seller;
+    private RectTransform _typeTextRectTransform;
+    
+    public CarAttributes carAttributes;
+    
+    [ReadOnly] public bool angryNotGonnaSell = false;
     private readonly Vector2 _randomToleranceRange = new Vector2(0.05f, 0.3f);
+    
     private FirstPersonMovement _playerMovement;
     private PlayerActions _playerActions;
-    private RectTransform _canvasRectTransform;
 
     private void Awake()
     {
         _playerMovement = GameObject.FindWithTag("Movement").GetComponent<FirstPersonMovement>();
         _playerActions = _playerMovement.transform.parent.GetComponent<PlayerActions>();
-        _canvasRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
+        _typeTextRectTransform = transform.GetChild(0).GetComponent<RectTransform>();
     }
     
     private void Update()
@@ -36,8 +39,8 @@ public class Npc : MonoBehaviour
 
     private void CanvasTagLookPlayer()
     {
-        _canvasRectTransform.LookAt(_playerMovement.transform);
-        _canvasRectTransform.Rotate(0, 180, 0);
+        _typeTextRectTransform.LookAt(_playerMovement.transform);
+        _typeTextRectTransform.Rotate(0, 180, 0);
     }
     
     public void ResetNpcTypeCanvas()
@@ -45,13 +48,13 @@ public class Npc : MonoBehaviour
         switch (npcType)
         {
             case NpcType.buyer:
-                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Buyer";
+                _typeTextRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Buyer";
                 break;
             case NpcType.seller:
-                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
+                _typeTextRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
                 break;
             default:
-                _canvasRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
+                _typeTextRectTransform.transform.GetChild(0).GetComponent<TMP_Text>().text = "Seller";
                 break;
         }
     }
