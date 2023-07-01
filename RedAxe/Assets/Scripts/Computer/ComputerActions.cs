@@ -1,22 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class ComputerActions : MonoBehaviour
 {
-    public Transform contentTransform;
-    public GameObject carSellingBoxPrefab;
+    public Transform contentTransform; 
+    public GameObject computerBoxPrefab;
     
     public void AddCarToSellingBox(CarAttributes carAttributes)
     {
-        var carSellingBox = Instantiate(carSellingBoxPrefab, contentTransform);
-        carSellingBox.GetComponent<SalePostInfo>().SetInfo(carAttributes);
-        carSellingBox.name = carAttributes.carKey.ToString();
+        var computerBox = Instantiate(computerBoxPrefab, contentTransform);
+        computerBox.GetComponent<SalePostInfo>().SetInfo(carAttributes);
+        computerBox.name = carAttributes.carKey.ToString();
     }
     
     public void RemoveCarFromSellingBox(int carKey)
     {
-        var carSellingBox = contentTransform.Find(carKey.ToString()).gameObject;
-        Destroy(carSellingBox);
+        var computerBox = contentTransform.Find(carKey.ToString()).gameObject;
+        Destroy(computerBox);
     }
 }
