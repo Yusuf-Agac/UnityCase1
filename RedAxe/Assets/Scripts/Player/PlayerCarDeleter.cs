@@ -1,13 +1,16 @@
 using UnityEngine;
 
-public static class PlayerCarDeleter
+namespace Player
 {
-    public static void DeleteCarAttributes(int carIndex)
+    public static class PlayerCarDeleter
     {
-        string carKey = "Car" + carIndex.ToString();
-        if (PlayerPrefs.HasKey(carKey))
+        public static void DeleteCarAttributes(int carIndex)
         {
-            PlayerPrefs.DeleteKey(carKey);
+            string carKey = "Car" + carIndex.ToString();
+            if (PlayerPrefs.HasKey(carKey))
+            {
+                PlayerPrefs.DeleteKey(carKey);
+            }
         }
     }
 }

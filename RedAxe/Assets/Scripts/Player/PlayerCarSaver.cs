@@ -1,16 +1,20 @@
+using Car;
 using UnityEngine;
 
-public static class PlayerCarSaver
+namespace Player
 {
-    public static void SaveCarAttributes(CarAttributes carAttributes)
+    public static class PlayerCarSaver
     {
-        int carCount = PlayerPrefs.GetInt("CarCount", -1);
-        carCount++;
-        PlayerPrefs.SetInt("CarCount", carCount);
-        carAttributes.carKey = carCount;
-        string carKey = "Car" + carCount.ToString();
-        string carData = JsonUtility.ToJson(carAttributes.ToData());
-        PlayerPrefs.SetString(carKey, carData);
-        carAttributes.AddCarToSellingBox();
+        public static void SaveCarAttributes(CarAttributes carAttributes)
+        {
+            int carCount = PlayerPrefs.GetInt("CarCount", -1);
+            carCount++;
+            PlayerPrefs.SetInt("CarCount", carCount);
+            carAttributes.carKey = carCount;
+            string carKey = "Car" + carCount.ToString();
+            string carData = JsonUtility.ToJson(carAttributes.ToData());
+            PlayerPrefs.SetString(carKey, carData);
+            carAttributes.AddCarToSellingBox();
+        }
     }
 }

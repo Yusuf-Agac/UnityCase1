@@ -1,21 +1,25 @@
+using Car;
 using UnityEngine;
 
-public static class PlayerCarLoader
+namespace Player
 {
-    public static CarAttributesData LoadCarAttributes(int carIndex)
+    public static class PlayerCarLoader
     {
-        if (HasCar(carIndex))
+        public static CarAttributesData LoadCarAttributes(int carIndex)
         {
-            string carData = PlayerPrefs.GetString("Car" + carIndex.ToString());
-            return JsonUtility.FromJson<CarAttributesData>(carData);
-        }
+            if (HasCar(carIndex))
+            {
+                string carData = PlayerPrefs.GetString("Car" + carIndex.ToString());
+                return JsonUtility.FromJson<CarAttributesData>(carData);
+            }
 
-        return null;
-    }
+            return null;
+        }
     
-    public static bool HasCar(int carIndex)
-    {
-        string carKey = "Car" + carIndex.ToString();
-        return PlayerPrefs.HasKey(carKey);
+        public static bool HasCar(int carIndex)
+        {
+            string carKey = "Car" + carIndex.ToString();
+            return PlayerPrefs.HasKey(carKey);
+        }
     }
 }
