@@ -11,7 +11,6 @@ public static class MaterialModifier
             Material[] materials = objectRenderers[i].materials;
             Material newMaterial = new Material(materials[materialIndex[i]]);
             
-            // Modify the normal map value
             newMaterial.SetFloat("_BumpScale", value * damageMultiplier);
 
             materials[materialIndex[i]] = newMaterial;
