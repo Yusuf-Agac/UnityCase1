@@ -154,7 +154,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1078111604}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -584,7 +584,7 @@ GameObject:
   - component: {fileID: 99212489}
   - component: {fileID: 99212488}
   m_Layer: 8
-  m_Name: Image
+  m_Name: TaskBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -818,7 +818,7 @@ GameObject:
   - component: {fileID: 112477607}
   - component: {fileID: 112477606}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: ComputerPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1088,7 +1088,7 @@ GameObject:
   - component: {fileID: 145063257}
   - component: {fileID: 145063256}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1259,7 +1259,7 @@ GameObject:
   - component: {fileID: 171571445}
   - component: {fileID: 171571444}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: TablePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2187,7 +2187,7 @@ GameObject:
   - component: {fileID: 298942587}
   - component: {fileID: 298942586}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: TablePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3318,7 +3318,7 @@ GameObject:
   - component: {fileID: 448215004}
   - component: {fileID: 448215003}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: TablePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3414,7 +3414,7 @@ GameObject:
   - component: {fileID: 475214481}
   - component: {fileID: 475214480}
   m_Layer: 8
-  m_Name: Image (1)
+  m_Name: TaskImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4706,7 +4706,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1640167785}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -4945,7 +4945,7 @@ GameObject:
   - component: {fileID: 697864257}
   - component: {fileID: 697864256}
   m_Layer: 8
-  m_Name: Image (2)
+  m_Name: TaskImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5292,7 +5292,7 @@ GameObject:
   - component: {fileID: 772875385}
   - component: {fileID: 772875384}
   m_Layer: 0
-  m_Name: Cube
+  m_Name: ComputerPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -6480,7 +6480,7 @@ GameObject:
   - component: {fileID: 992580015}
   - component: {fileID: 992580014}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: TablePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7141,7 +7141,7 @@ GameObject:
   - component: {fileID: 1133497170}
   - component: {fileID: 1133497169}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: ComputerPiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9110,7 +9110,7 @@ GameObject:
   - component: {fileID: 1496773161}
   - component: {fileID: 1496773160}
   m_Layer: 0
-  m_Name: Cube (1)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9206,7 +9206,7 @@ GameObject:
   - component: {fileID: 1499000589}
   - component: {fileID: 1499000588}
   m_Layer: 8
-  m_Name: Image
+  m_Name: TaskImage
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9344,7 +9344,7 @@ GameObject:
   - component: {fileID: 1520352388}
   - component: {fileID: 1520352391}
   m_Layer: 0
-  m_Name: Cube (3)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -10084,7 +10084,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 557440339}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -10577,7 +10577,7 @@ GameObject:
   - component: {fileID: 1775184434}
   - component: {fileID: 1775184433}
   m_Layer: 0
-  m_Name: Cube (4)
+  m_Name: TablePiece
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11002,7 +11002,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 346710700}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11643,7 +11643,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 649635357}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11957,7 +11957,7 @@ GameObject:
   - component: {fileID: 2124634899}
   - component: {fileID: 2124634898}
   m_Layer: 0
-  m_Name: Cube (2)
+  m_Name: Wall
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
