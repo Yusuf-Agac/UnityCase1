@@ -6,6 +6,7 @@ using UnityEngine;
 public class Bargain : MonoBehaviour
 {
     public ChatBox chatBox;
+    
     private PlayerActions _playerActions;
     private Npc _npc;
 
@@ -14,7 +15,7 @@ public class Bargain : MonoBehaviour
         _playerActions = GetComponent<PlayerActions>();
     }
 
-    public void StartBargain (bool isPlayerBargain, int sellerPrice, Npc npc)
+    public void StartBargain (bool isPlayerBargain, int price, Npc npc)
     {
         _npc = npc;
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Initial), isPlayerBargain);
@@ -24,9 +25,9 @@ public class Bargain : MonoBehaviour
             return;
         }
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Initial), !isPlayerBargain);
-        chatBox.AddMessage(AddPriceToMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.SellerPrice), sellerPrice), !isPlayerBargain);
+        chatBox.AddMessage(AddPriceToMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.SellerPrice), price), !isPlayerBargain);
         chatBox.AddMessage(BargainCommunication.GetRandomMessage(BargainCommunication.BargainState.Thinking), isPlayerBargain);
-        if (!isPlayerBargain) { BargainRequest(false, npc.BargainOffer(sellerPrice)); }
+        if (!isPlayerBargain) { OfferBargain(false, npc.BargainOffer(price)); }
     }
     
     public void AcceptBargain (bool isPlayerBargain)
@@ -53,7 +54,7 @@ public class Bargain : MonoBehaviour
         }
     }
     
-    public void BargainRequest (bool isPlayerBargain, int requestedPrice)
+    public void OfferBargain (bool isPlayerBargain, int requestedPrice)
     {
         if(!isPlayerBargain) { _npc.carAttributes.bargainPrice = requestedPrice; }
         if (isPlayerBargain && _npc.angryNotGonnaSell)

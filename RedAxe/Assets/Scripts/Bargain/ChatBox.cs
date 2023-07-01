@@ -7,25 +7,25 @@ using UnityEngine.UI;
 
 public class ChatBox : MonoBehaviour
 {
-    private bool _isFloatingFlag = false;
-    private bool _isMessageQueueIsOn = false;
+    private bool _isFloating = false;
+    private bool _isMessageQueueRunning = false;
     private int _messageCount = 0;
     public float floatSpeed = 1.75f;
     
-    private RectTransform _canvasRectTransform;
+    private RectTransform _contentRectTransform;
     public GameObject messageBoxPrefab;
-    private float _floatHeight = 0f;
+    private float _additiveHeight = 0f;
     private float _targetHeight;
     private float _tempHeight;
     private VerticalLayoutGroup _verticalLayoutGroup;
 
     private void Awake()
     {
-        _canvasRectTransform = GetComponent<RectTransform>();
+        _contentRectTransform = GetComponent<RectTransform>();
         _verticalLayoutGroup = GetComponent<VerticalLayoutGroup>();
-        _floatHeight = messageBoxPrefab.transform.GetComponent<RectTransform>().rect.height;
-        _floatHeight += _verticalLayoutGroup.spacing;
-        _targetHeight = _canvasRectTransform.anchoredPosition.y;
+        _additiveHeight = messageBoxPrefab.transform.GetComponent<RectTransform>().rect.height;
+        _additiveHeight += _verticalLayoutGroup.spacing;
+        _targetHeight = _contentRectTransform.anchoredPosition.y;
         _tempHeight = _targetHeight;
     }
     
@@ -35,11 +35,11 @@ public class ChatBox : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        _canvasRectTransform.anchoredPosition = new Vector2(0, _tempHeight);
+        _contentRectTransform.anchoredPosition = new Vector2(0, _tempHeight);
         _targetHeight = _tempHeight;
         _messageCount = 0;
-        _isFloatingFlag = false;
-        _isMessageQueueIsOn = false;
+        _isFloating = false;
+        _isMessageQueueRunning = false;
     }
 
     public void AddMessage(string message, bool isPlayerMessage = false)
@@ -51,10 +51,10 @@ public class ChatBox : MonoBehaviour
         
         _messageCount++;
         
-        if (!_isMessageQueueIsOn)
+        if (!_isMessageQueueRunning)
         {
             StartCoroutine(MessageQueue()); 
-            _isMessageQueueIsOn = true;
+            _isMessageQueueRunning = true;
         }
     }
     
@@ -62,32 +62,34 @@ public class ChatBox : MonoBehaviour
     {
         while (true)
         {
-            if (_messageCount > 0 && !_isFloatingFlag)
+            if (_messageCount > 0 && !_isFloating)
             {
                 _messageCount--;
-                _targetHeight += _floatHeight;
+                _targetHeight += _additiveHeight;
                 StartCoroutine(FloatUp());
             }
+            
             yield return null;
         }
     }
 
     private IEnumerator FloatUp()
     {
-        _isFloatingFlag = true;
+        _isFloating = true;
         
-        while (_isFloatingFlag)
+        while (_isFloating)
         {
-            _canvasRectTransform.anchoredPosition = Vector2.Lerp(_canvasRectTransform.anchoredPosition, new Vector2(0, _targetHeight), Time.deltaTime * floatSpeed);
-            if (Math.Abs(_canvasRectTransform.anchoredPosition.y - _targetHeight) < 2f)
+            _contentRectTransform.anchoredPosition = Vector2.Lerp(_contentRectTransform.anchoredPosition, new Vector2(0, _targetHeight), Time.deltaTime * floatSpeed);
+            if (Math.Abs(_contentRectTransform.anchoredPosition.y - _targetHeight) < 2f)
             {
-                _canvasRectTransform.anchoredPosition = new Vector2(0, _targetHeight);
+                _contentRectTransform.anchoredPosition = new Vector2(0, _targetHeight);
                 break;
             }
+            
             yield return null;
         }
 
-        _isFloatingFlag = false;
+        _isFloating = false;
     }
 
 }

@@ -358,6 +358,6 @@ public class PlayerActions : MonoBehaviour
     public void PlayerBargainRequest()
     {
         bool isParsed = int.TryParse(bargainInputField.text, out var parsedPrice);
-        if(isParsed) { _bargain.BargainRequest(true, parsedPrice); }
+        if(isParsed) { _bargain.OfferBargain(true, parsedPrice); }
     }
 }
