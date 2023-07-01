@@ -8,9 +8,6 @@ public static class PlayerCarDeleter
         if (PlayerPrefs.HasKey(carKey))
         {
             PlayerPrefs.DeleteKey(carKey);
-            int carCount = PlayerPrefs.GetInt("CarCount", 0);
-            carCount--;
-            PlayerPrefs.SetInt("CarCount", carCount);
         }
     }
 }
