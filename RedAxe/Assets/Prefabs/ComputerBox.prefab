@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3132396368582346867}
   - component: {fileID: 7207339512490494917}
   m_Layer: 5
-  m_Name: CarSellingBoxUI
+  m_Name: ComputerBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
